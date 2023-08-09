@@ -32,3 +32,10 @@ function Root() {
     </Provider>
   );
 }
+
+ReactDOM.render(
+  <React.StrictMode>
+    <Root />
+  </React.StrictMode>,
+  document.getElementById('root'),
+);
