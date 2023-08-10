@@ -22,13 +22,13 @@ module.exports = {
       teamId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Teams' }
+        references: { model: 'Teams' },
+        onDelete: 'CASCADE'
       },
       description: {
         type: Sequelize.TEXT
       },
       leadId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'Users' }
       },

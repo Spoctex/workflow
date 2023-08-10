@@ -19,14 +19,14 @@ module.exports = {
       projectId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Projects' }
+        references: { model: 'Projects' },
+        onDelete: 'CASCADE'
       },
       assignedId: {
         type: Sequelize.INTEGER,
         references: { model: 'Users' }
       },
       creatorId: {
-        allowNull: false,
         type: Sequelize.INTEGER,
         references: { model: 'Users' }
       },
