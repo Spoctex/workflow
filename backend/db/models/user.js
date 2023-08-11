@@ -13,8 +13,6 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: 'creatorId' })
       User.hasMany(models.Project,
         { foreignKey: 'leadId' })
-      User.hasMany(models.Team,
-        { foreignKey: 'ownerId' })
       User.hasMany(models.Issue,
         { foreignKey: 'assignedId' })
       User.belongsToMany(models.Team,
@@ -23,6 +21,8 @@ module.exports = (sequelize, DataTypes) => {
           foreignKey: 'userId',
           otherKey: 'teamId'
         })
+      // User.hasMany(models.Team,
+      //   { foreignKey: 'ownerId' })
     }
   }
   User.init({
