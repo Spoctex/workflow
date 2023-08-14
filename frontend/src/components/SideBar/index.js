@@ -7,7 +7,7 @@ import "./SideBar.css";
 
 function SideBar({ isLoaded }) {
   const user = useSelector((state) => state.session.user);
-  const teams = useSelector(state => Object.values(state.teams));
+  const teams = useSelector(state => state.teams);
   const [showBar, setShowBar] = useState(false);
   const [openTeam, setOpenTeam] = useState(-1);
   const history = useHistory();
@@ -32,7 +32,7 @@ function SideBar({ isLoaded }) {
       <button>New Issue</button>
       <button>My Issues</button>
       <p>Your Teams</p>
-      {teams.map(team => {
+      {Object.values(teams).map(team => {
         console.log('SideBar',teams)
         return (
           <>
