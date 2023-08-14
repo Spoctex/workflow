@@ -19,7 +19,8 @@ function MyIssues() {
             })
         });
         setUserIssues(issues)
-        // console.log(issues)
+        console.log('MyIssues',user)
+        console.log('MyIssues',issues)
     }, [teams])
 
     return (

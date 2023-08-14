@@ -32,21 +32,24 @@ function SideBar({ isLoaded }) {
       <button>New Issue</button>
       <button>My Issues</button>
       <p>Your Teams</p>
-      {teams.map(team => (
-        <>
-          <button onClick={() => { setOpenTeam(openId => openId === team.id ? -1 : team.id) }}>{team.name}</button>
-          <ul className={openTeam === team.id ? '' : 'hidden'}>
-            <li>
-              Issues
-              <ul>
-                <li>Active</li>
-                <li>Backlog</li>
-              </ul>
-            </li>
-            <li>Projects</li>
-          </ul>
-        </>
-      ))}
+      {teams.map(team => {
+        console.log('SideBar',teams)
+        return (
+          <>
+            <button onClick={() => { setOpenTeam(openId => openId === team.id ? -1 : team.id) }}>{team.name}</button>
+            <ul className={openTeam === team.id ? '' : 'hidden'}>
+              <li>
+                Issues
+                <ul>
+                  <li>Active</li>
+                  <li>Backlog</li>
+                </ul>
+              </li>
+              <li>Projects</li>
+            </ul>
+          </>
+        )
+      })}
     </div>
   );
 
