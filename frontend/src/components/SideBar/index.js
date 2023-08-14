@@ -7,7 +7,9 @@ import "./SideBar.css";
 
 function SideBar({ isLoaded }) {
   const user = useSelector((state) => state.session.user);
-  const teams = useSelector(state => state.teams);
+  const teams = useSelector(state => {
+    console.log('State',state)
+    return state.teams});
   const [showBar, setShowBar] = useState(false);
   const [openTeam, setOpenTeam] = useState(-1);
   const history = useHistory();
