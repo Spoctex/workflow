@@ -35,7 +35,7 @@ function SideBar({ isLoaded }) {
       <button>My Issues</button>
       <p>Your Teams</p>
       {Object.values(teams).map(team => {
-        console.log('SideBar',teams)
+        // console.log('SideBar',teams)
         return (
           <>
             <button onClick={() => { setOpenTeam(openId => openId === team.id ? -1 : team.id) }}>{team.name}</button>

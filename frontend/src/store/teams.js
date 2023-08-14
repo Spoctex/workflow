@@ -19,6 +19,7 @@ const setAllNone = () => {
 export const userInfo = () => async (dispatch) => {
     let all = await csrfFetch('/api/users/teams');
     all = await all.json();
+    console.log('Thunk',all)
     let allFlat = {};
     all.forEach(team => {
         let teamFlat ={
@@ -38,7 +39,7 @@ export const userInfo = () => async (dispatch) => {
         });
         allFlat[team.id] = teamFlat;
     });
-    // console.log(allFlat)
+    console.log('Thunk (flat)',allFlat)
     dispatch(setAll(allFlat));
 }
 
@@ -52,6 +53,7 @@ const teamReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_ALL:
+            console.log('Reducer',action.payload)
             return action.payload;
         case SET_ALL_NONE:
             return {};
