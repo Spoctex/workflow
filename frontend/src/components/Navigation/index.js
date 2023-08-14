@@ -1,44 +1,31 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { useSelector } from "react-redux";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import OpenModalButton from "../OpenModalButton";
-import LoginFormModal from "../LoginFormModal";
-import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
+import { noUser } from "../../store/teams";
 
 function Navigation({ isLoaded }) {
-  const sessionUser = useSelector((state) => state.session.user);
+  const user = useSelector((state) => state.session.user);
+  const history = useHistory();
+  const dispatch = useDispatch();
 
-  let sessionLinks;
-  if (sessionUser) {
-    sessionLinks = (
+  useEffect(()=>{
+      if (!user){
+          dispatch(noUser());
+          history.push('/');
+      }
+  },[user])
+
+
+  let sessionLinks = (
       <li>
-        <ProfileButton user={sessionUser} />
+        <ProfileButton user={user} />
       </li>
     );
-  } else {
-    sessionLinks = (
-      <li>
-        <OpenModalButton
-          buttonText="Log In"
-          modalComponent={<LoginFormModal />}
-        />
-        <OpenModalButton
-          buttonText="Sign Up"
-          modalComponent={<SignupFormModal />}
-        />
-      </li>
-    );
-  }
 
   return (
     <ul>
-      <li>
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-      </li>
       {isLoaded && sessionLinks}
     </ul>
   );
