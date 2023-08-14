@@ -1,1 +1,7 @@
 /* TODO Add site wide styles */
+#BarPageContainer{
+    display: flex;
+    width: 98vw;
+    height: 98vh;
+    border: 1px solid blue;
+}
