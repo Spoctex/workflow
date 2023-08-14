@@ -57,25 +57,26 @@ router.post(
 router.get('/teams',
   requireAuth,
   async (req, res) => {
-    let teams = await req.user.getTeams();
-    let rtrn = [];
-    await Promise.all(teams.map(async (team) => {
-      let projs = await team.getProjects();
+
+
+    let user = await User.findByPk(req.user.id, {
+      include: {
+        model: Team,
+        include: {
+          model: Project,
+          include: Issue
+        }
+      }
+    })
+    let teams = user.Teams;
+    let newTeams = await Promise.all(teams.map(async (team)=>{
       let mems = await team.getUsers();
       team = await team.toJSON();
       team.Members = mems;
-      let processedProjects = [];
-      await Promise.all(projs.map(async (project) => {
-        let issues = await project.getIssues();
-        project = await project.toJSON();
-        project.Issues = issues;
-        processedProjects.push(project);
-      }))
-      team.Projects = processedProjects;
       delete team.Member;
-      rtrn.push(team)
+      return team;
     }))
-    return res.json(rtrn)
+    return res.json(newTeams);
   }
 )
 
