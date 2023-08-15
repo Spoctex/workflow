@@ -2,7 +2,8 @@ import { useDispatch } from 'react-redux';
 import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
 import './NewIssue.css'
 import { useState } from 'react';
-import { createIssue } from '../../store/teams';
+import { createIssue, userInfo } from '../../store/teams';
+import { useModal } from '../../context/Modal';
 
 
 
@@ -17,6 +18,7 @@ function NewIssue({ currTeam }) {
     const [projectId,setProjectId] = useState(Object.values(currTeam.Projects).find(proj=>proj.name==='Global').id);
     const [submitted,setSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
+    const { closeModal } = useModal();
 
     async function onSubmit(e){
         e.preventDefault();
@@ -36,7 +38,9 @@ function NewIssue({ currTeam }) {
             currTeam:currTeam.id
         };
         dispatch(createIssue(iss))
-        console.log('passing', iss)
+        // .then(()=>dispatch(userInfo()))
+        .then(closeModal)
+        // console.log('passing', iss)
     }
 
     return (

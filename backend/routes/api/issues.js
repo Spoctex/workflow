@@ -35,8 +35,8 @@ const validateNewIssue = [
 router.post('/',
     validateNewIssue,
     async (req, res, next) => {
-        const {projectId,title,description,priority,label,assignedId} = req.body;
-        console.log(projectId,title,description)
+        const { projectId, title, description, priority, label, assignedId } = req.body;
+        // console.log(projectId, title, description)
         let iss = await Issue.create({
             creatorId: req.user.id,
             projectId,
@@ -50,6 +50,12 @@ router.post('/',
         return res.json(iss)
     }
 )
+
+router.delete('/:id', async (req, res, next) => {
+    let iss = await Issue.findByPk(req.params.id);
+    await iss.destroy();
+    return res.json({message: 'Successfully destroyed'})
+})
 
 
 module.exports = router;
