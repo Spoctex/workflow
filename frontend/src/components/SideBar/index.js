@@ -3,15 +3,17 @@ import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import { noUser, userInfo } from "../../store/teams";
+import OpenModalButton from "../OpenModalButton";
 import "./SideBar.css";
+import NewIssue from "../NewIssueModal";
 
 function SideBar({ isLoaded }) {
   const user = useSelector((state) => state.session.user);
   const teams = useSelector(state => {
-    console.log('State',state)
+    // console.log('State',state)
     return state.teams});
   const [showBar, setShowBar] = useState(false);
-  const [openTeam, setOpenTeam] = useState(-1);
+  const [openTeam, setOpenTeam] = useState(Object.values(teams)[0]?.id);
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -31,14 +33,17 @@ function SideBar({ isLoaded }) {
   return (
     <div className={showBar ? "" : " hidden"}>
       <ProfileButton user={user} />
-      <button>New Issue</button>
+            <OpenModalButton
+                buttonText="New Issue"
+                modalComponent={<NewIssue currTeam={teams[openTeam]} />}
+            />
       <button>My Issues</button>
       <p>Your Teams</p>
       {Object.values(teams).map(team => {
         // console.log('SideBar',teams)
         return (
           <>
-            <button onClick={() => { setOpenTeam(openId => openId === team.id ? -1 : team.id) }}>{team.name}</button>
+            <button onClick={() => { setOpenTeam(team.id) }}>{team.name}</button>
             <ul className={openTeam === team.id ? '' : 'hidden'}>
               <li>
                 Issues
