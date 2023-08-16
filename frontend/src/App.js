@@ -6,6 +6,7 @@ import SideBar from "./components/SideBar";
 import Landing from "./components/Landing";
 // import { noUser, userInfo } from "./store/teams";
 import MyIssues from "./components/MyIssues";
+import IssueDetails from "./components/IssueDetails";
 
 function App() {
   const dispatch = useDispatch();
@@ -29,6 +30,9 @@ function App() {
             </Route>
             <Route exact path='/myIssues'>
               <MyIssues />
+            </Route>
+            <Route exact path='/:teamId/:projId/:issueId'>
+              <IssueDetails />
             </Route>
           </Switch>}
       </div>

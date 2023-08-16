@@ -4,6 +4,7 @@ const SET_ALL = "teams/setAll";
 const SET_ALL_NONE = 'teams/setAllNone';
 const CREATE_ISSUE = 'issues/new';
 const DELETE_ISSUE = 'issue/delete';
+const EDIT_ISSUE = 'issue/put';
 
 
 
@@ -24,6 +25,14 @@ const setAllNone = () => {
 const postIssue = (iss, teamId) => {
     return {
         type: CREATE_ISSUE,
+        issue: iss,
+        teamId
+    }
+}
+
+const putIssue = (iss, teamId) => {
+    return {
+        type: EDIT_ISSUE,
         issue: iss,
         teamId
     }
@@ -86,6 +95,15 @@ export const removeIssue = (iss, teamId) => async (dispatch) => {
     dispatch(delIssue(iss.id, iss.projectId, teamId));
 }
 
+export const editIssue = (edit/*{ title, description, status, label, priority, projectId }*/) => async (dispatch) => {
+    let newIss = await csrfFetch(`/api/issues/${edit.id}`, {
+        method: 'PUT',
+        body: JSON.stringify(edit)
+    });
+    newIss = await newIss.json();
+    dispatch(putIssue(newIss, edit.currTeam))
+}
+
 
 //REDUCER=========================================================================
 const initialState = {};
@@ -99,6 +117,11 @@ const teamReducer = (state = initialState, action) => {
         case SET_ALL_NONE:
             return {};
         case CREATE_ISSUE:
+            newState = Object.assign({}, state);
+            // console.log(newState[action.teamId], action.teamId)
+            newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;
+            return newState;
+        case EDIT_ISSUE:
             newState = Object.assign({}, state);
             // console.log(newState[action.teamId], action.teamId)
             newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;

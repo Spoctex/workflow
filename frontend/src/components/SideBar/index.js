@@ -5,13 +5,14 @@ import ProfileButton from "./ProfileButton";
 import { noUser, userInfo } from "../../store/teams";
 import OpenModalButton from "../OpenModalButton";
 import "./SideBar.css";
-import NewIssue from "../NewIssueModal";
+import IssueModal from "../IssueModal";
 
 function SideBar({ isLoaded }) {
   const user = useSelector((state) => state.session.user);
   const teams = useSelector(state => {
     // console.log('State',state)
-    return state.teams});
+    return state.teams
+  });
   const [showBar, setShowBar] = useState(false);
   const [openTeam, setOpenTeam] = useState(Object.values(teams)[0]?.id);
   const history = useHistory();
@@ -24,7 +25,6 @@ function SideBar({ isLoaded }) {
       setShowBar(false);
     } else {
       dispatch(userInfo());
-      history.push('/myIssues');
       setShowBar(true);
     }
   }, [user])
@@ -33,10 +33,10 @@ function SideBar({ isLoaded }) {
   return (
     <div className={showBar ? "" : " hidden"}>
       <ProfileButton user={user} />
-            <OpenModalButton
-                buttonText="New Issue"
-                modalComponent={<NewIssue currTeam={teams[openTeam]} />}
-            />
+      <OpenModalButton
+        buttonText="New Issue"
+        modalComponent={<IssueModal currTeam={teams[openTeam]} edit={false} />}
+      />
       <button>My Issues</button>
       <p>Your Teams</p>
       {Object.values(teams).map(team => {

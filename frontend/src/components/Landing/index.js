@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
-// import { useHistory } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
+import { useHistory } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
@@ -8,16 +8,15 @@ import SignupFormModal from "../SignupFormModal";
 import "./Landing.css";
 
 function Landing({ isLoaded }) {
-    // const user = useSelector((state) => state.session.user);
-    // const history = useHistory();
+    const user = useSelector((state) => state.session.user);
+    const history = useHistory();
     // const dispatch = useDispatch();
 
-    // useEffect(()=>{
-    //     if (user){
-    //         dispatch(userInfo());
-    //         history.push('/myIssues');
-    //     }
-    // },[user])
+    useEffect(()=>{
+        if (user){
+            history.push('/myIssues');
+        }
+    },[user])
 
     let sessionLinks = (
         <li>

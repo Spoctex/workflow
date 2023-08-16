@@ -35,7 +35,7 @@ const validateNewIssue = [
 router.post('/',
     validateNewIssue,
     async (req, res, next) => {
-        const { projectId, title, description, priority, label, assignedId } = req.body;
+        const { projectId, title, description, priority, label, assignedId, status } = req.body;
         // console.log(projectId, title, description)
         let iss = await Issue.create({
             creatorId: req.user.id,
@@ -45,7 +45,7 @@ router.post('/',
             assignedId,
             priority,
             label,
-            status: 'Backlog'
+            status
         })
         return res.json(iss)
     }
@@ -56,6 +56,21 @@ router.delete('/:id', async (req, res, next) => {
     await iss.destroy();
     return res.json({message: 'Successfully destroyed'})
 })
+
+router.put('/:id', async (req,res,next) =>{
+    let iss = await Issue.findByPk(req.params.id);
+    const { projectId, title, description, priority, label, assignedId, status } = req.body;
+    iss.title = title;
+    iss.projectId = projectId;
+    iss.description = description;
+    iss.priority =priority;
+    iss.label = label;
+    iss.status = status;
+    iss.assignedId = assignedId;
+    await iss.save();
+    return res.json(iss);
+})
+
 
 
 module.exports = router;
