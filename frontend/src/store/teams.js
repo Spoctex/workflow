@@ -88,6 +88,7 @@ export const createIssue = (iss/*{ title, description, status, label, priority, 
     });
     newIss = await newIss.json();
     dispatch(postIssue(newIss, iss.currTeam))
+    return newIss
 }
 
 export const removeIssue = (iss, teamId) => async (dispatch) => {
