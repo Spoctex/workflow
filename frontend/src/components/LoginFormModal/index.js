@@ -23,6 +23,17 @@ function LoginFormModal() {
         }
       });
   };
+  const logDemo = (e) => {
+    setErrors({});
+    return dispatch(sessionActions.login({ credential: 'Demo-lition', password: 'password' }))
+      .then(closeModal)
+      .catch(async (res) => {
+        const data = await res.json();
+        if (data && data.errors) {
+          setErrors(data.errors);
+        }
+      });
+  };
 
   return (
     <>
@@ -51,6 +62,7 @@ function LoginFormModal() {
         )}
         <button type="submit">Log In</button>
       </form>
+      <button onClick={logDemo} id='demoButton'>Demo User</button>
     </>
   );
 }

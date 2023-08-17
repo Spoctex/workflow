@@ -8,6 +8,7 @@ import "./SideBar.css";
 import IssueModal from "../IssueModal";
 import { useContext } from "react";
 import { CurrTeamContext } from "../../context/currTeam";
+import TeamModal from "../TeamModal";
 
 function SideBar({ isLoaded }) {
   const {currTeam,setCurrTeam} = useContext(CurrTeamContext)
@@ -59,10 +60,15 @@ function SideBar({ isLoaded }) {
                 </ul> */}
               </li>
               <li onClick={()=>history.push(`/teams/${team.id}/projects`)}>Projects</li>
+              <button>Edit Team</button>
             </ul>
           </>
         )
       })}
+      {currTeam && <OpenModalButton
+                buttonText="New Team"
+                modalComponent={<TeamModal edit={false} />}
+            />}
     </div>
   );
 

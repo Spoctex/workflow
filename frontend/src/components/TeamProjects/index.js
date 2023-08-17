@@ -1,33 +1,47 @@
 import './TeamProjects.css'
 import { useEffect, useState } from 'react';
 import IssueCard from '../IssueCard';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useContext } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
 import { useParams } from 'react-router-dom';
+import ProjectModal from '../ProjectModal';
+import OpenModalButton from '../OpenModalButton';
+import { deleteProject } from '../../store/teams';
 
 function TeamProjects() {
+    const dispatch = useDispatch();
     const user = useSelector(state => state.session.user);
     const teams = useSelector(state => state.teams);
-    const { currTeam,setCurrTeam } = useContext(CurrTeamContext);
-    const {teamId} = useParams();
+    const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
+    const { teamId } = useParams();
 
     useEffect(() => {
-        if (currTeam != teamId)setCurrTeam(teamId);
+        if (currTeam != teamId) setCurrTeam(teamId);
     }, [teamId])
 
     return (
         <>
-            {teams[currTeam]?.Projects && Object.values(teams[currTeam].Projects).map(proj=>(
-            <div>
-                <p>
-                {proj.name}
-                </p>
-                <p>{proj.description}</p>
-                <p>Issues :{Object.keys(proj.Issues).length}</p>
-                
-            </div>
-            ))}
+            {currTeam && <OpenModalButton
+                buttonText="New Project"
+                modalComponent={<ProjectModal currTeam={teams[currTeam]} edit={false} />}
+            />}
+            {teams[currTeam]?.Projects && Object.values(teams[currTeam].Projects).map(proj => {
+                if (proj.name !== 'Global') return (
+                    <div>
+                        <p>
+                            {proj.name}
+                        </p>
+                        <p>Description: {proj.description ? proj.description : 'Unset'}</p>
+                        <p>Issues :{Object.keys(proj.Issues).length}</p>
+                        <OpenModalButton
+                            buttonText="Edit Project"
+                            modalComponent={<ProjectModal currTeam={teams[currTeam]} edit={proj} />}
+                        />
+                        <button onClick={()=>dispatch(deleteProject())}>Remove Project</button>
+                    </div>
+                )
+            })}
         </>
     )
 }

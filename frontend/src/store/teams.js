@@ -5,6 +5,11 @@ const SET_ALL_NONE = 'teams/setAllNone';
 const CREATE_ISSUE = 'issues/new';
 const DELETE_ISSUE = 'issue/delete';
 const EDIT_ISSUE = 'issue/put';
+const CREATE_PROJECT = 'project/post';
+const EDIT_PROJECT = 'project/put';
+const DELETE_PROJECT = 'project/delete';
+const CREATE_TEAM = 'team/post';
+const EDIT_TEAM = 'team/put';
 
 
 
@@ -103,6 +108,26 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
     });
     newIss = await newIss.json();
     dispatch(putIssue(newIss, edit.currTeam))
+}
+
+export const createTeam = (team) => async (dispatch)=>{
+
+}
+
+export const editTeam = (team) => async (dispatch)=>{
+
+}
+
+export const createProject = (team) => async (dispatch)=>{
+
+}
+
+export const editProject = (team) => async (dispatch)=>{
+
+}
+
+export const deleteProject = (team) => async (dispatch)=>{
+
 }
 
 
