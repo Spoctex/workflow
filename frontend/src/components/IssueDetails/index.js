@@ -14,14 +14,14 @@ function IssueDetails() {
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
     return (
         <>
-            <p>{team.name.slice(0, 3).toUpperCase()} - {issue.id}</p>
-            <p>Title: {issue.title}</p>
-            <p>Description: {issue.description}</p>
-            <p>Status: {issue.status}</p>
-            <p>Label :{issue.label}</p>
-            <p>Priority: {issue.priority}</p>
+            <p>{team?.name.slice(0, 3).toUpperCase()} - {issue?.id}</p>
+            <p>Title: {issue?.title}</p>
+            <p>Description: {issue?.description}</p>
+            <p>Status: {issue?.status}</p>
+            <p>Label :{issue?.label}</p>
+            <p>Priority: {issue?.priority}</p>
             {/* <p>Assigned to: {issue.assignedTo}</p> */}
-            {project != 'Global' && <p>Project: {project.name}</p>}
+            {project != 'Global' && <p>Project: {project?.name}</p>}
             <OpenModalButton
                 buttonText="Edit Issue"
                 modalComponent={<IssueModal currTeam={team} edit={issue} />}

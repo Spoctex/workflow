@@ -19,15 +19,17 @@ function SideBar({ isLoaded }) {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (!user) {
-      dispatch(noUser());
-      history.push('/');
-      setShowBar(false);
-    } else {
-      dispatch(userInfo());
-      setShowBar(true);
+    if (isLoaded) {
+      if (!user) {
+        dispatch(noUser());
+        history.push('/');
+        setShowBar(false);
+      } else {
+        dispatch(userInfo());
+        setShowBar(true);
+      }
     }
-  }, [user])
+  }, [user,isLoaded])
 
 
   return (
@@ -37,7 +39,7 @@ function SideBar({ isLoaded }) {
         buttonText="New Issue"
         modalComponent={<IssueModal currTeam={teams[openTeam]} edit={false} />}
       />
-      <button>My Issues</button>
+      <button onClick={() => history.push('/myIssues')}>My Issues</button>
       <p>Your Teams</p>
       {Object.values(teams).map(team => {
         // console.log('SideBar',teams)
