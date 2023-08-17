@@ -7,6 +7,8 @@ import Landing from "./components/Landing";
 // import { noUser, userInfo } from "./store/teams";
 import MyIssues from "./components/MyIssues";
 import IssueDetails from "./components/IssueDetails";
+import TeamIssues from "./components/TeamIssues";
+import TeamProjects from "./components/TeamProjects";
 
 function App() {
   const dispatch = useDispatch();
@@ -31,7 +33,13 @@ function App() {
             <Route exact path='/myIssues'>
               <MyIssues />
             </Route>
-            <Route exact path='/:teamId/:projId/:issueId'>
+            <Route exact path='/teams/:teamId/issues'>
+              <TeamIssues/>
+            </Route>
+            <Route exact path='/teams/:teamId/projects'>
+              <TeamProjects />
+            </Route>
+            <Route exact path='/teams/:teamId/projects/:projId/issues/:issueId'>
               <IssueDetails />
             </Route>
           </Switch>}

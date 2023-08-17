@@ -41,7 +41,7 @@ function IssueModal({ currTeam, edit }) {
         };
         if (edit) iss.id = edit.id;
         dispatch(edit ? editIssue(iss) : createIssue(iss))
-            .then((newIss) => history.push(`/${currTeam.id}/${iss.projectId}/${edit ? iss.id : newIss.id}`))
+            .then((newIss) => history.push(`/teams/${currTeam.id}/projects/${iss.projectId}/issues/${edit ? iss.id : newIss.id}`))
             .then(closeModal)
         // console.log('passing', iss)
     }

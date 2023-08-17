@@ -16,7 +16,7 @@ function IssueCard({ issue, project, team }) {
 
     return (
 
-        <div className='IssueCard' onClick={()=>{history.push(`/${team.id}/${project.id}/${issue.id}`)}}>
+        <div className='IssueCard' onClick={()=>{history.push(`/teams/${team.id}/projects/${project.id}/issues/${issue.id}`)}}>
             <p>Priority: {issue.priority ? issue.priority : 'unset'}</p>
             <p>Status: {issue.status}</p>
             <p>{team.name.slice(0, 3).toUpperCase()} - {issue.id}</p>

@@ -6,15 +6,15 @@ import { noUser, userInfo } from "../../store/teams";
 import OpenModalButton from "../OpenModalButton";
 import "./SideBar.css";
 import IssueModal from "../IssueModal";
+import { useContext } from "react";
+import { CurrTeamContext } from "../../context/currTeam";
 
 function SideBar({ isLoaded }) {
+  const {currTeam,setCurrTeam} = useContext(CurrTeamContext)
   const user = useSelector((state) => state.session.user);
-  const teams = useSelector(state => {
-    // console.log('State',state)
-    return state.teams
-  });
+  const teams = useSelector(state => state.teams);
   const [showBar, setShowBar] = useState(false);
-  const [openTeam, setOpenTeam] = useState(Object.values(teams)[0]?.id);
+  // const [openTeam, setOpenTeam] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -29,32 +29,36 @@ function SideBar({ isLoaded }) {
         setShowBar(true);
       }
     }
-  }, [user,isLoaded])
+    // console.log(openTeam)
+  }, [user, isLoaded])
 
 
   return (
     <div className={showBar ? "" : " hidden"}>
       <ProfileButton user={user} />
-      <OpenModalButton
+      {currTeam && <OpenModalButton
         buttonText="New Issue"
-        modalComponent={<IssueModal currTeam={teams[openTeam]} edit={false} />}
-      />
+        modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
+      />}
       <button onClick={() => history.push('/myIssues')}>My Issues</button>
       <p>Your Teams</p>
       {Object.values(teams).map(team => {
         // console.log('SideBar',teams)
         return (
           <>
-            <button onClick={() => { setOpenTeam(team.id) }}>{team.name}</button>
-            <ul className={openTeam === team.id ? '' : 'hidden'}>
-              <li>
+            <button onClick={() => {
+              setCurrTeam(team.id);
+              history.push(`/teams/${team.id}/issues`);
+              }}>{team.name}</button>
+            <ul className={currTeam === team.id ? '' : 'hidden'}>
+              <li onClick={()=>history.push(`/teams/${team.id}/issues`)}>
                 Issues
-                <ul>
+                {/* <ul>
                   <li>Active</li>
                   <li>Backlog</li>
-                </ul>
+                </ul> */}
               </li>
-              <li>Projects</li>
+              <li onClick={()=>history.push(`/teams/${team.id}/projects`)}>Projects</li>
             </ul>
           </>
         )

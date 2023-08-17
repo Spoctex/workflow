@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from 'react-redux';
 import './IssueDetails.css'
-import { useParams } from 'react-router-dom/cjs/react-router-dom';
+import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
 
