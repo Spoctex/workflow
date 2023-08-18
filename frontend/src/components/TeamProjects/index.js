@@ -38,7 +38,7 @@ function TeamProjects() {
                             buttonText="Edit Project"
                             modalComponent={<ProjectModal currTeam={teams[currTeam]} edit={proj} />}
                         />
-                        <button onClick={()=>dispatch(deleteProject())}>Remove Project</button>
+                        <button onClick={()=>dispatch(deleteProject(proj))}>Remove Project</button>
                     </div>
                 )
             })}

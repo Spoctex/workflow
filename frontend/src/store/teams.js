@@ -80,6 +80,14 @@ const putProject = (newProject) =>{
     }
 }
 
+const delProject =(teamId,projId)=>{
+    return{
+        type:DELETE_PROJECT,
+        projId,
+        teamId
+    }
+}
+
 
 
 //THUNKS=========================================================================================
@@ -195,7 +203,8 @@ export const editProject = (project) => async (dispatch) => {
 }
 
 export const deleteProject = (project) => async (dispatch) => {
-
+    await csrfFetch(`/api/projects/${project.id}`,{ method: 'DELETE'});
+    return dispatch(delProject(project.teamId,project.id));
 }
 
 
@@ -206,18 +215,15 @@ const teamReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
         case SET_ALL:
-            // console.log('Reducer',action.payload)
             return action.payload;
         case SET_ALL_NONE:
             return {};
         case CREATE_ISSUE:
             newState = Object.assign({}, state);
-            // console.log(newState[action.teamId], action.teamId)
             newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;
             return newState;
         case EDIT_ISSUE:
             newState = Object.assign({}, state);
-            // console.log(newState[action.teamId], action.teamId)
             newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;
             return newState;
         case DELETE_ISSUE:
@@ -242,6 +248,9 @@ const teamReducer = (state = initialState, action) => {
             newState[action.newProject.teamId].Projects[action.newProject.id].description = action.newProject.description;
             return newState;
         case DELETE_PROJECT:
+            newState = Object.assign({}, state);
+            delete newState[action.teamId].Projects[action.projId];
+            return newState;
 
         default:
             return state;

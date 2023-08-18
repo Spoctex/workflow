@@ -54,7 +54,7 @@ router.post('/',
 router.delete('/:id', async (req, res, next) => {
     let iss = await Issue.findByPk(req.params.id);
     await iss.destroy();
-    return res.json({message: 'Successfully destroyed'})
+    return res.json({message: 'Successfully destroyed'});
 })
 
 router.put('/:id', async (req,res,next) =>{

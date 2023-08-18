@@ -23,6 +23,12 @@ router.put('/:projId', async(req,res,next)=>{
     return res.json(proj);
 });
 
+router.delete('/:projId', async(req,res,next)=>{
+    let proj = await Project.findByPk(req.params.projId);
+    await proj.destroy();
+    return res.json({message: 'Successfully destroyed'});
+})
+
 
 
 
