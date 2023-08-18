@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 // import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
 import './TeamModal.css'
 import { useState } from 'react';
@@ -13,7 +13,7 @@ import { CurrTeamContext } from '../../context/currTeam';
 
 function TeamModal({ currTeam, edit }) {
     const dispatch = useDispatch();
-    // const history = useHistory();
+    const history = useHistory();
     const [name, setName] = useState(edit ? edit.name : '');
     // const [description, setDescription] = useState(edit ? edit.description : null);
     const [submitted, setSubmitted] = useState(false);
@@ -28,12 +28,15 @@ function TeamModal({ currTeam, edit }) {
         if (name.length < 4) errs.title = 'Please provide a name longer than 4 characters';
         if (name.length > 50) errs.title = 'Please provide a name shorter than 50 characters';
         if (Object.values(errs).length) return setErrors(errs);
-        const iss = {
+        const team = {
             name,
         };
-        if (edit) iss.id = edit.id;
-        dispatch(edit ? editTeam(iss) : createTeam(iss))
-            .then(newTeam => setCurrTeam(newTeam.id))
+        if (edit) team.id = edit.id;
+        dispatch(edit ? editTeam(team) : createTeam(team))
+            .then(newTeam => {
+                setCurrTeam(newTeam.id);
+                history.push(`/teams/${newTeam.id}/issues`)
+            })
             .then(closeModal)
         // console.log('passing', iss)
     }

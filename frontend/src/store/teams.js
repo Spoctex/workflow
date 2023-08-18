@@ -52,6 +52,13 @@ const delIssue = (issueId, projId, teamId) => {
     }
 }
 
+const postTeam = (newTeam) => {
+    return {
+        type: CREATE_TEAM,
+        newTeam
+    }
+}
+
 
 
 //THUNKS=========================================================================================
@@ -110,23 +117,44 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
     dispatch(putIssue(newIss, edit.currTeam))
 }
 
-export const createTeam = (team) => async (dispatch)=>{
+export const createTeam = (team) => async (dispatch) => {
+    let newTeam = await csrfFetch(`/api/teams`, {
+        method: 'POST',
+        body: JSON.stringify(team)
+    })
+    newTeam = await newTeam.json();
+        let teamFlat = {
+            ...newTeam,
+            Members: {},
+            Projects: {}
+        };
+        newTeam.Members.forEach(mem => {
+            teamFlat.Members[mem.id] = mem;
+        });
+        newTeam.Projects.forEach(proj => {
+            let projFlat = { ...proj, Issues: {} };
+            proj.Issues.forEach(iss => {
+                projFlat.Issues[iss.id] = iss;
+            });
+            teamFlat.Projects[proj.id] = projFlat;
+        });
+    dispatch(postTeam(teamFlat));
+    return teamFlat;
+}
+
+export const editTeam = (team) => async (dispatch) => {
 
 }
 
-export const editTeam = (team) => async (dispatch)=>{
+export const createProject = (team) => async (dispatch) => {
 
 }
 
-export const createProject = (team) => async (dispatch)=>{
+export const editProject = (team) => async (dispatch) => {
 
 }
 
-export const editProject = (team) => async (dispatch)=>{
-
-}
-
-export const deleteProject = (team) => async (dispatch)=>{
+export const deleteProject = (team) => async (dispatch) => {
 
 }
 
@@ -156,6 +184,15 @@ const teamReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             delete newState[action.teamId].Projects[action.projId].Issues[action.issueId];
             return newState;
+        case CREATE_TEAM:
+            newState = Object.assign({}, state);
+            newState[action.newTeam.id] = action.newTeam;
+            return newState;
+        case EDIT_TEAM:
+        case CREATE_PROJECT:
+        case EDIT_PROJECT:
+        case DELETE_PROJECT:
+
         default:
             return state;
     }
