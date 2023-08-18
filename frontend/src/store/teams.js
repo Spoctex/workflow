@@ -59,6 +59,13 @@ const postTeam = (newTeam) => {
     }
 }
 
+const putTeam = (newTeam) =>{
+    return{
+        type:EDIT_TEAM,
+        newTeam
+    }
+}
+
 
 
 //THUNKS=========================================================================================
@@ -143,7 +150,13 @@ export const createTeam = (team) => async (dispatch) => {
 }
 
 export const editTeam = (team) => async (dispatch) => {
-
+    let newTeam = await csrfFetch(`/api/teams/${team.id}`,{
+        method:'PUT',
+        body: JSON.stringify(team)
+    });
+    newTeam = await newTeam.json();
+    dispatch(putTeam(newTeam));
+    return newTeam;
 }
 
 export const createProject = (team) => async (dispatch) => {
@@ -189,6 +202,9 @@ const teamReducer = (state = initialState, action) => {
             newState[action.newTeam.id] = action.newTeam;
             return newState;
         case EDIT_TEAM:
+            newState = Object.assign({}, state);
+            newState[action.newTeam.id].name = action.newTeam.name;
+            return newState;
         case CREATE_PROJECT:
         case EDIT_PROJECT:
         case DELETE_PROJECT:

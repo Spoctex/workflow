@@ -47,6 +47,14 @@ router.post('/', async (req,res,next)=>{
      return res.json(teamFormd);
 })
 
+router.put(`/:teamId`,async(req,res,next)=>{
+    console.log(req.body)
+    let team = await Team.findByPk(req.body.id);
+    team.name = req.body.name;
+    team.save()
+    return res.json(team)
+})
+
 
 
 

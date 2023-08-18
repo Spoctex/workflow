@@ -11,7 +11,7 @@ import { CurrTeamContext } from "../../context/currTeam";
 import TeamModal from "../TeamModal";
 
 function SideBar({ isLoaded }) {
-  const {currTeam,setCurrTeam} = useContext(CurrTeamContext)
+  const { currTeam, setCurrTeam } = useContext(CurrTeamContext)
   const user = useSelector((state) => state.session.user);
   const teams = useSelector(state => state.teams);
   const [showBar, setShowBar] = useState(false);
@@ -50,25 +50,28 @@ function SideBar({ isLoaded }) {
             <button onClick={() => {
               setCurrTeam(team.id);
               history.push(`/teams/${team.id}/issues`);
-              }}>{team.name}</button>
+            }}>{team.name}</button>
             <ul className={currTeam === team.id ? '' : 'hidden'}>
-              <li onClick={()=>history.push(`/teams/${team.id}/issues`)}>
+              <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
                 Issues
                 {/* <ul>
                   <li>Active</li>
                   <li>Backlog</li>
                 </ul> */}
               </li>
-              <li onClick={()=>history.push(`/teams/${team.id}/projects`)}>Projects</li>
-              <button>Edit Team</button>
+              <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
+              <OpenModalButton
+                buttonText="Edit Team"
+                modalComponent={<TeamModal edit={team} />}
+              />
             </ul>
           </>
         )
       })}
-      {currTeam && <OpenModalButton
-                buttonText="New Team"
-                modalComponent={<TeamModal edit={false} />}
-            />}
+      <OpenModalButton
+        buttonText="New Team"
+        modalComponent={<TeamModal edit={false} />}
+      />
     </div>
   );
 

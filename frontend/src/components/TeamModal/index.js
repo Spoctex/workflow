@@ -35,7 +35,7 @@ function TeamModal({ currTeam, edit }) {
         dispatch(edit ? editTeam(team) : createTeam(team))
             .then(newTeam => {
                 setCurrTeam(newTeam.id);
-                history.push(`/teams/${newTeam.id}/issues`)
+                history.push(`/teams/${newTeam.id}/issues`);
             })
             .then(closeModal)
         // console.log('passing', iss)
