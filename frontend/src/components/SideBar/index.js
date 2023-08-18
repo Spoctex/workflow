@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
-import { noUser, userInfo } from "../../store/teams";
+import { deleteTeam, noUser, userInfo } from "../../store/teams";
 import OpenModalButton from "../OpenModalButton";
 import "./SideBar.css";
 import IssueModal from "../IssueModal";
@@ -62,10 +62,15 @@ function SideBar({ isLoaded }) {
                 </ul> */}
               </li>
               <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
+              <li>
               <OpenModalButton
                 buttonText="Edit Team"
                 modalComponent={<TeamModal edit={team} />}
               />
+              </li>
+              <li>
+                <button onClick={()=>dispatch(deleteTeam(team)).then(()=>history.push('/myIssues'))}>Delete Team</button>
+              </li>
             </ul>
           </>
         )

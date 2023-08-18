@@ -33,12 +33,12 @@ function TeamProjects() {
                             {proj.name}
                         </p>
                         <p>Description: {proj.description ? proj.description : 'Unset'}</p>
-                        <p>Issues :{proj.Issues?Object.keys(proj.Issues).length:'0'}</p>
+                        <p>Issues :{proj.Issues ? Object.keys(proj.Issues).length : '0'}</p>
                         <OpenModalButton
                             buttonText="Edit Project"
                             modalComponent={<ProjectModal currTeam={teams[currTeam]} edit={proj} />}
                         />
-                        <button onClick={()=>dispatch(deleteProject(proj))}>Remove Project</button>
+                        <button onClick={() => dispatch(deleteProject(proj))}>Remove Project</button>
                     </div>
                 )
             })}

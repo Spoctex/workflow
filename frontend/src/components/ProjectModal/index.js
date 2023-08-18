@@ -45,7 +45,7 @@ function ProjectModal({ currTeam, edit }) {
                 {submitted && errors.title && <div className='issueFormErrors'><p>{errors.title}</p></div>}
                 <textarea placeholder='Add description...' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
                 {submitted && errors.description && <div className='issueFormErrors'><p>{errors.description}</p></div>}
-                <button type='submit'>{edit ? 'Confirm edit' : 'Create Issue'}</button>
+                <button type='submit'>{edit ? 'Confirm edit' : 'Create Project'}</button>
             </form>
         </div>
     )

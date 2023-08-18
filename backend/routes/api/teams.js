@@ -1,12 +1,9 @@
 const express = require('express');
+const {welcomeIssues} = require('./welcomeData')
 
 const { User, Issue, Team, Project, Member } = require('../../db/models');
 
 const router = express.Router();
-
-
-
-
 
 
 router.post('/', async (req, res, next) => {
@@ -39,15 +36,21 @@ router.post('/', async (req, res, next) => {
         lastName: req.user.lastName,
         username: req.user.username
     }];
+    console.log(teamFormd)
     return res.json(teamFormd);
 })
 
 router.put(`/:teamId`, async (req, res, next) => {
-    console.log(req.body)
     let team = await Team.findByPk(req.body.id);
     team.name = req.body.name;
     await team.save();
     return res.json(team);
+})
+
+router.delete('/:teamId', async(req,res,next)=>{
+    let team = await Team.findByPk(req.params.teamId);
+    await team.destroy();
+    return res.json({message:'Team deleted'});
 })
 
 

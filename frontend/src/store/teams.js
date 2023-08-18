@@ -10,6 +10,7 @@ const EDIT_PROJECT = 'project/put';
 const DELETE_PROJECT = 'project/delete';
 const CREATE_TEAM = 'team/post';
 const EDIT_TEAM = 'team/put';
+const DELETE_TEAM = 'team/delete';
 
 
 
@@ -84,6 +85,13 @@ const delProject =(teamId,projId)=>{
     return{
         type:DELETE_PROJECT,
         projId,
+        teamId
+    }
+}
+
+const delTeam =(teamId)=>{
+    return{
+        type:DELETE_TEAM,
         teamId
     }
 }
@@ -187,7 +195,7 @@ export const createProject = (project) => async (dispatch) => {
         body: JSON.stringify(project)
     });
     newProj = await newProj.json();
-    console.log(newProj)
+    newProj.Issues ={};
     dispatch(postProject(newProj));
     return newProj;
 }
@@ -205,6 +213,11 @@ export const editProject = (project) => async (dispatch) => {
 export const deleteProject = (project) => async (dispatch) => {
     await csrfFetch(`/api/projects/${project.id}`,{ method: 'DELETE'});
     return dispatch(delProject(project.teamId,project.id));
+}
+
+export const deleteTeam = (team) => async (dispatch) => {
+    await csrfFetch(`/api/teams/${team.id}`,{ method: 'DELETE'});
+    return dispatch(delTeam(team.id));
 }
 
 
@@ -251,7 +264,10 @@ const teamReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             delete newState[action.teamId].Projects[action.projId];
             return newState;
-
+        case DELETE_TEAM:
+            newState = Object.assign({}, state);
+            delete newState[action.teamId];
+            return newState;
         default:
             return state;
     }
