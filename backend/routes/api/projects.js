@@ -13,7 +13,15 @@ router.post('/', async (req, res, next) => {
         leadId: req.user.id
     });
     return res.json(newProj);
-})
+});
+
+router.put('/:projId', async(req,res,next)=>{
+    let proj = await Project.findByPk(req.body.id);
+    proj.name = req.body.name;
+    proj.description = req.body.description;
+    await proj.save();
+    return res.json(proj);
+});
 
 
 
