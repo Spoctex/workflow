@@ -37,9 +37,12 @@ function IssueModal({ currTeam, edit }) {
             label,
             priority,
             projectId,
-            currTeam: currTeam.id
+            currTeam: currTeam.id,
         };
-        if (edit) iss.id = edit.id;
+        if (edit){
+            iss.id = edit.id;
+            iss.oldProj = edit.projectId;
+        }
         dispatch(edit ? editIssue(iss) : createIssue(iss))
             .then((newIss) => history.push(`/teams/${currTeam.id}/projects/${iss.projectId}/issues/${edit ? iss.id : newIss.id}`))
             .then(closeModal)

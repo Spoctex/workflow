@@ -3,6 +3,7 @@ import './IssueDetails.css'
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
+import { removeIssue } from '../../store/teams';
 
 
 function IssueDetails() {
@@ -12,6 +13,12 @@ function IssueDetails() {
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
+
+    async function delIssue(issue, teamId) {
+        dispatch(removeIssue(issue, teamId))
+    }
+
+
     return (
         <>
             <p>{team?.name.slice(0, 3).toUpperCase()} - {issue?.id}</p>
@@ -26,6 +33,7 @@ function IssueDetails() {
                 buttonText="Edit Issue"
                 modalComponent={<IssueModal currTeam={team} edit={issue} />}
             />
+            <button onClick={() => delIssue(issue, team.id)}>Remove Issue</button>
         </>
     )
 }

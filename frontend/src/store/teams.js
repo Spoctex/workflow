@@ -36,11 +36,12 @@ const postIssue = (iss, teamId) => {
     }
 }
 
-const putIssue = (iss, teamId) => {
+const putIssue = (iss, teamId, oldProjId) => {
     return {
         type: EDIT_ISSUE,
         issue: iss,
-        teamId
+        teamId,
+        oldProjId
     }
 }
 
@@ -151,7 +152,7 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
         body: JSON.stringify(edit)
     });
     newIss = await newIss.json();
-    dispatch(putIssue(newIss, edit.currTeam))
+    dispatch(putIssue(newIss, edit.currTeam,edit.oldProj))
 }
 
 export const createTeam = (team) => async (dispatch) => {
@@ -237,6 +238,7 @@ const teamReducer = (state = initialState, action) => {
             return newState;
         case EDIT_ISSUE:
             newState = Object.assign({}, state);
+            if (action.issue.projectId !== action.oldProjId) delete newState[action.teamId].Projects[action.oldProjId].Issues[action.issue.id]
             newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;
             return newState;
         case DELETE_ISSUE:
