@@ -66,6 +66,13 @@ const putTeam = (newTeam) =>{
     }
 }
 
+const postProject = (newProject) =>{
+    return {
+        type: CREATE_PROJECT,
+        newProject
+    }
+}
+
 
 
 //THUNKS=========================================================================================
@@ -159,15 +166,22 @@ export const editTeam = (team) => async (dispatch) => {
     return newTeam;
 }
 
-export const createProject = (team) => async (dispatch) => {
+export const createProject = (project) => async (dispatch) => {
+    let newProj = await csrfFetch('/api/projects',{
+        method: 'POST',
+        body: JSON.stringify(project)
+    });
+    newProj = await newProj.json();
+    console.log(newProj)
+    dispatch(postProject(newProj));
+    return newProj;
+}
+
+export const editProject = (project) => async (dispatch) => {
 
 }
 
-export const editProject = (team) => async (dispatch) => {
-
-}
-
-export const deleteProject = (team) => async (dispatch) => {
+export const deleteProject = (project) => async (dispatch) => {
 
 }
 
@@ -206,6 +220,9 @@ const teamReducer = (state = initialState, action) => {
             newState[action.newTeam.id].name = action.newTeam.name;
             return newState;
         case CREATE_PROJECT:
+            newState = Object.assign({}, state);
+            newState[action.newProject.teamId].Projects[action.newProject.id] = action.newProject;
+            return newState;
         case EDIT_PROJECT:
         case DELETE_PROJECT:
 

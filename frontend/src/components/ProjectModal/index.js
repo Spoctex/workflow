@@ -26,12 +26,13 @@ function ProjectModal({ currTeam, edit }) {
         if (name.length > 50) errs.title = 'Please provide a title shorter than 50 characters';
         if (description && description.length > 400) errs.description = 'Please keep your description shorter than 400 characters';
         if (Object.values(errs).length) return setErrors(errs);
-        const iss = {
-            title: name,
+        const proj = {
+            name,
             description,
+            teamId: currTeam.id
         };
-        if (edit) iss.id = edit.id;
-        dispatch(edit ? editProject(iss) : createProject(iss))
+        if (edit) proj.id = edit.id;
+        dispatch(edit ? editProject(proj) : createProject(proj))
             .then(closeModal)
         // console.log('passing', iss)
     }
@@ -40,7 +41,7 @@ function ProjectModal({ currTeam, edit }) {
         <div>
             <h1>{edit ? 'Edit' : 'New'} Project</h1>
             <form onSubmit={onSubmit}>
-                <input type='string' placeholder='Issue Title' value={name} onChange={(e) => setName(e.target.value)} />
+                <input type='string' placeholder='Project Name' value={name} onChange={(e) => setName(e.target.value)} />
                 {submitted && errors.title && <div className='issueFormErrors'><p>{errors.title}</p></div>}
                 <textarea placeholder='Add description...' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
                 {submitted && errors.description && <div className='issueFormErrors'><p>{errors.description}</p></div>}

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import { noUser, userInfo } from "../../store/teams";
@@ -14,6 +14,7 @@ function SideBar({ isLoaded }) {
   const { currTeam, setCurrTeam } = useContext(CurrTeamContext)
   const user = useSelector((state) => state.session.user);
   const teams = useSelector(state => state.teams);
+  const {teamId} = useParams();
   const [showBar, setShowBar] = useState(false);
   // const [openTeam, setOpenTeam] = useState();
   const history = useHistory();
@@ -28,10 +29,11 @@ function SideBar({ isLoaded }) {
       } else {
         dispatch(userInfo());
         setShowBar(true);
+        setCurrTeam(teamId);
       }
     }
     // console.log(openTeam)
-  }, [user, isLoaded])
+  }, [user, isLoaded,teamId])
 
 
   return (
@@ -51,7 +53,7 @@ function SideBar({ isLoaded }) {
               setCurrTeam(team.id);
               history.push(`/teams/${team.id}/issues`);
             }}>{team.name}</button>
-            <ul className={currTeam === team.id ? '' : 'hidden'}>
+            <ul className={currTeam == team.id ? '' : 'hidden'}>
               <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
                 Issues
                 {/* <ul>
