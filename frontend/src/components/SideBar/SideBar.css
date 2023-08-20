@@ -1,3 +1,121 @@
 .hidden{
     display: none;
 }
+
+.seen{
+    display: flex;
+}
+
+.sideBarMain{
+    /* display: flex; */
+    flex-direction: column;
+    padding-left: 10px;
+    min-width: 200px;
+    margin-right: 10px;
+    border-right: 1px solid grey;
+    padding-right: 10px;
+    height: 100%;
+}
+
+.sideBarMain>ul>li>button,
+.sideBarMain>button{
+    width: fit-content;
+    /* margin-left: 10px; */
+    margin-top: 10px;
+    background-color: inherit;
+    border: none;
+    color: white;
+    font-size: medium;
+    display: flex;
+}
+
+.sideBarMain>button{
+    margin-left: 10px;
+}
+
+.sideBarMain>ul>li>button{
+    margin: 0;
+    padding: 0;
+}
+
+.sideBarMain>ul>li{
+    margin-top: 3px;
+    text-decoration: none;
+}
+
+.sideBarMain>ul>li:hover{
+    cursor: pointer;
+}
+
+.sideBarMain>ul>li>button:hover,
+.sideBarMain>button:hover{
+    cursor: pointer;
+}
+
+#newTeam,
+#newIss{
+    background-color: rgba(255,255,255,0.2);
+    border: 1px solid grey;
+    border-radius: 7px;
+    margin-left: 0;
+    width: 100%;
+    padding: 5px;
+}
+
+#yTems{
+    margin-top: 50px;
+}
+
+#profileDrop {
+    margin-right: 20px;
+    background: none;
+    border: none;
+    font-family: 'Belanosima', serif;
+    font-size: x-large;
+    color: white;
+    margin-left: 0;
+}
+
+
+.profile-dropdown {
+    background-color: #191A23;
+    list-style-type: none;
+    margin-top: 5px;
+    padding-left: 0px;
+    /* position: absolute;
+    top: 0px;
+    left: 0px;
+    vertical-align: baseline; */
+    right: 30px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: rgb(140, 130, 115);
+    border-image: initial;
+}
+
+.profile-dropdown>li {
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#logOut {
+    background: none;
+    border: none;
+    font-size: medium;
+    font-family: "Gordita", Helvetica, Arial, Verdana, sans-serif;
+    color: white;
+}
+
+#logOut:hover {
+    cursor: pointer;
+}
+
+#logOutLi {
+    border-top: 1px solid;
+    border-color: rgb(140, 130, 115);
+    margin-left: 4px;
+    margin-right: 4px;
+    /* padding-left: -10px; */
+}

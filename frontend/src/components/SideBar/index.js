@@ -1,21 +1,21 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import ProfileButton from "./ProfileButton";
 import { deleteTeam, noUser, userInfo } from "../../store/teams";
-import OpenModalButton from "../OpenModalButton";
-import "./SideBar.css";
-import IssueModal from "../IssueModal";
 import { useContext } from "react";
 import { CurrTeamContext } from "../../context/currTeam";
+import ProfileButton from "./ProfileButton";
+import OpenModalButton from "../OpenModalButton";
+import IssueModal from "../IssueModal";
 import TeamModal from "../TeamModal";
+import "./SideBar.css";
 
 function SideBar({ isLoaded }) {
   const { currTeam, setCurrTeam } = useContext(CurrTeamContext)
   const user = useSelector((state) => state.session.user);
   const teams = useSelector(state => state.teams);
-  const {teamId} = useParams();
-  const [showBar, setShowBar] = useState(false);
+  const { teamId } = useParams();
+  const [showBar, setShowBar] = useState(" hidden");
   // const [openTeam, setOpenTeam] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -25,26 +25,29 @@ function SideBar({ isLoaded }) {
       if (!user) {
         dispatch(noUser());
         history.push('/');
-        setShowBar(false);
+        setShowBar(" hidden");
       } else {
         dispatch(userInfo());
-        setShowBar(true);
+        setShowBar(" seen");
         setCurrTeam(teamId);
       }
     }
     // console.log(openTeam)
-  }, [user, isLoaded,teamId])
+  }, [user, isLoaded, teamId])
 
 
   return (
-    <div className={showBar ? "" : " hidden"}>
+    <div className={"sideBarMain" + showBar} id="sideBarMain">
+      {/* <div id='topBar'> */}
       <ProfileButton user={user} />
       {currTeam && <OpenModalButton
         buttonText="New Issue"
+        id='newIss'
         modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
       />}
       <button onClick={() => history.push('/myIssues')}>My Issues</button>
-      <p>Your Teams</p>
+      {/* </div> */}
+      <p id="yTems">Your Teams</p>
       {Object.values(teams).map(team => {
         // console.log('SideBar',teams)
         return (
@@ -52,7 +55,13 @@ function SideBar({ isLoaded }) {
             <button onClick={() => {
               setCurrTeam(team.id);
               history.push(`/teams/${team.id}/issues`);
-            }}>{team.name}</button>
+            }}>{team.name}{team.id == currTeam ?
+              <span class="material-symbols-outlined">
+                expand_less
+              </span> :
+              <span class="material-symbols-outlined">
+                expand_more
+              </span>}</button>
             <ul className={currTeam == team.id ? '' : 'hidden'}>
               <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
                 Issues
@@ -63,13 +72,13 @@ function SideBar({ isLoaded }) {
               </li>
               <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
               <li>
-              <OpenModalButton
-                buttonText="Edit Team"
-                modalComponent={<TeamModal edit={team} />}
-              />
+                <OpenModalButton
+                  buttonText="Edit Team"
+                  modalComponent={<TeamModal edit={team} />}
+                />
               </li>
               <li>
-                <button onClick={()=>dispatch(deleteTeam(team)).then(()=>history.push('/myIssues'))}>Delete Team</button>
+                <button onClick={() => dispatch(deleteTeam(team)).then(() => history.push('/myIssues'))}>Delete Team</button>
               </li>
             </ul>
           </>
@@ -77,6 +86,7 @@ function SideBar({ isLoaded }) {
       })}
       <OpenModalButton
         buttonText="New Team"
+        id='newTeam'
         modalComponent={<TeamModal edit={false} />}
       />
     </div>

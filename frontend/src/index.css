@@ -3,7 +3,7 @@
     display: flex;
     width: 98vw;
     height: 98vh;
-    border: 1px solid blue;
+    /* border: 1px solid blue; */
 }
 
 /* TODO Add site wide styles */
@@ -13,7 +13,7 @@
 } */
 
 body {
-    background-color: rgb(24, 26, 27);
+    background-color: #191A23;
     color: white;
 }
 
@@ -21,16 +21,8 @@ html {
     font-family: "Gordita", Helvetica, Arial, Verdana, sans-serif;
 }
 
-#modal-backgroud {
-    background-color: rgb(24, 26, 27);
-}
-
-#modal {
-    background-color: rgb(24, 26, 27);
-}
-
 #modal-content {
-    background-color: rgb(24, 26, 27);
+    background-color: #191A23;
     display: flex;
     flex-direction: column;
     align-items: center;
