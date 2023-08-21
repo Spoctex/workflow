@@ -15,17 +15,15 @@ function IssueCard({ issue, project, team }) {
 
 
     return (
-        <div className='IssueCard'>
-            <div onClick={() => { history.push(`/teams/${team.id}/projects/${project.id}/issues/${issue.id}`) }}>
-                <p>Priority: {issue.priority ? issue.priority : 'unset'}</p>
-                <p>Status: {issue.status}</p>
-                <p>{team.name.slice(0, 3).toUpperCase()} - {issue.id}</p>
-                <p>Title: {issue.title}</p>
-                {project != 'Global' && <p>Project: {project.name}</p>}
+            <div className='IssueCard' onClick={() => { history.push(`/teams/${team.id}/projects/${project.id}/issues/${issue.id}`) }}>
+                <p className='issCardId'>{team.name.slice(0, 3).toUpperCase()} - {issue.id}</p>
+                <p className='issCardTtl'>{issue.title}</p>
+                <div className='issCardPs'>
+                    <p className='issCardPri'>Priority: {issue.priority ? issue.priority : 'none'}</p>
+                    {project.name != 'Global' && <p className='issCardProj'>{project.name}</p>}
+                </div>
                 {/* <p>Assigned To: {issue.assignedTo ? issue.assignedTo : 'usassigned'}</p> */}
             </div>
-            {/* <button onClick={() => delIssue(issue, team.id)}>Remove Issue</button> */}
-        </div>
     )
 }
 export default IssueCard

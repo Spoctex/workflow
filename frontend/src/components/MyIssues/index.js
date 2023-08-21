@@ -2,6 +2,7 @@ import './MyIssues.css';
 import { useEffect, useState } from 'react';
 import IssueCard from '../IssueCard';
 import { useSelector } from 'react-redux';
+import IssueBoard from '../IssueBoard';
 
 
 function MyIssues() {
@@ -26,14 +27,12 @@ function MyIssues() {
 
     return (
         <>
-        <button onClick={()=>{setFilter('all')}}>All</button>
+        {/* <button onClick={()=>{setFilter('all')}}>All</button>
         <button onClick={()=>{setFilter('assignedId')}}>Assigned</button>
-        <button onClick={()=>{setFilter('creatorId')}}>Created</button>
-            {userIssues.map(iss => {
-                let card = (<IssueCard issue={iss[0]} project={iss[1]} team={iss[2]} />)
-                if (filter === 'all') return card;
-                else if (iss[0][filter]===user.id) return card;
-            })}
+        <button onClick={()=>{setFilter('creatorId')}}>Created</button> */}
+        <IssueBoard issArr={userIssues.filter(iss=>{
+                if (filter === 'all') return iss;
+                else if (iss[0][filter]===user.id) return iss;})}/>
         </>
     )
 }

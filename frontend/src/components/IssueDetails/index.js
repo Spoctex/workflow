@@ -5,6 +5,8 @@ import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
 import { removeIssue } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { CurrTeamContext } from '../../context/currTeam';
 
 
 function IssueDetails() {
@@ -12,9 +14,14 @@ function IssueDetails() {
     const { teamId, projId, issueId } = useParams();
     const history = useHistory();
     const teams = useSelector(state => state.teams);
+    const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
+
+    useEffect(() => {
+        if (currTeam != teamId) setCurrTeam(teamId);
+    }, [teamId])
 
     async function delIssue(issue, teamId) {
         dispatch(removeIssue(issue, teamId))

@@ -1,7 +1,37 @@
 .IssueCard{
-    border: 2px solid red;
+    border: 1px solid white;
+    border-radius: 10px;
+    background-color: rgba(255,255,255,0.1);
+    padding: 7px;
+    margin-bottom: 10px;
 }
 
 .IssueCard:hover{
     cursor: pointer;
+}
+
+.issCardPs{
+    display: flex;
+    justify-content: space-between;
+}
+
+
+.issCardId,.issCardProj,.issCardTtl,.issCardPri{
+    margin: 5px;
+}
+
+.issCardPs>p{
+    background-color: rgba(0,0,0,0.3);
+    padding: 5px;
+    border: 1px grey solid;
+    border-radius: 7px;
+    font-size: small;
+}
+
+.issCardId{
+    font-size: small;
+}
+
+.issCardTtl{
+    font-size: large;
 }
