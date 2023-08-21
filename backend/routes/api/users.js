@@ -18,6 +18,22 @@ const validateSignup = [
     .exists({ checkFalsy: true })
     .isLength({ min: 4 })
     .withMessage('Please provide a username with at least 4 characters.'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 3 })
+    .withMessage('Please provide a first name with at least 3 characters.'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .isLength({ max: 50 })
+    .withMessage('Please provide a first name with no more than 50 characters.'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 3 })
+    .withMessage('Please provide a last name with at least 3 characters.'),
+  check('username')
+    .exists({ checkFalsy: true })
+    .isLength({ max: 50 })
+    .withMessage('Please provide a last name with no more than 50 characters.'),
   check('username')
     .not()
     .isEmail()
@@ -69,7 +85,7 @@ router.get('/teams',
       }
     })
     let teams = user.Teams;
-    let newTeams = await Promise.all(teams.map(async (team)=>{
+    let newTeams = await Promise.all(teams.map(async (team) => {
       let mems = await team.getUsers();
       team = await team.toJSON();
       team.Members = mems;
