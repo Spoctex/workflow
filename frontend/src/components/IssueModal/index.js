@@ -39,7 +39,7 @@ function IssueModal({ currTeam, edit }) {
             projectId,
             currTeam: currTeam.id,
         };
-        if (edit){
+        if (edit) {
             iss.id = edit.id;
             iss.oldProj = edit.projectId;
         }
@@ -49,44 +49,46 @@ function IssueModal({ currTeam, edit }) {
     }
 
     return (
-        <div>
+        <>
             <h1>{edit ? 'Edit' : 'New'} Issue</h1>
             <form onSubmit={onSubmit}>
                 <input type='string' placeholder='Issue Title' value={title} onChange={(e) => setTitle(e.target.value)} />
                 {submitted && errors.title && <div className='issueFormErrors'><p>{errors.title}</p></div>}
-                <textarea placeholder='Add description...' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
+                <textarea id='issDescIn' placeholder='Add description...' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
                 {submitted && errors.description && <div className='issueFormErrors'><p>{errors.description}</p></div>}
-                <select value={status} onChange={(e) => setStatus(e.target.value)}>
-                    {issueStatus.map(stat => (
-                        <option value={stat}>{stat}</option>
-                    ))}
-                </select>
-                <select value={label} onChange={(e) => setLabel(e.target.value === 'Label' ? null : e.target.value)}>
-                    <option value={null}>Label</option>
-                    {issueLabel.map(label => (
-                        <option value={label}>{label}</option>
-                    ))}
-                </select>
-                <select value={priority} onChange={(e) => setPriority(e.target.value === 'Priority' ? null : e.target.value)}>
-                    <option value={null}>Priority</option>
-                    {issuePriority.map(prior => (
-                        <option value={prior}>{prior}</option>
-                    ))}
-                </select>
-                <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
-                    {Object.values(currTeam.Projects).map(proj => {
-                        if (proj.name !== 'Global') return (
-                            <option value={proj.id}>{proj.name}</option>
-                        )
-                        return (
-                            <option value={proj.id}>Project</option>
-                        )
-                    }
-                    )}
-                </select>
+                <div id='issStsIn'>
+                    <select value={status} onChange={(e) => setStatus(e.target.value)}>
+                        {issueStatus.map(stat => (
+                            <option value={stat}>{stat}</option>
+                        ))}
+                    </select>
+                    <select value={label} onChange={(e) => setLabel(e.target.value === 'Label' ? null : e.target.value)}>
+                        <option value={null}>Label</option>
+                        {issueLabel.map(label => (
+                            <option value={label}>{label}</option>
+                        ))}
+                    </select>
+                    <select value={priority} onChange={(e) => setPriority(e.target.value === 'Priority' ? null : e.target.value)}>
+                        <option value={null}>Priority</option>
+                        {issuePriority.map(prior => (
+                            <option value={prior}>{prior}</option>
+                        ))}
+                    </select>
+                    <select value={projectId} onChange={(e) => setProjectId(e.target.value)}>
+                        {Object.values(currTeam.Projects).map(proj => {
+                            if (proj.name !== 'Global') return (
+                                <option value={proj.id}>{proj.name}</option>
+                            )
+                            return (
+                                <option value={proj.id}>Project</option>
+                            )
+                        }
+                        )}
+                    </select>
+                </div>
                 <button type='submit'>{edit ? 'Confirm edit' : 'Create Issue'}</button>
             </form>
-        </div>
+        </>
     )
 }
 export default IssueModal;

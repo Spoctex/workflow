@@ -32,21 +32,27 @@ html {
     border-radius: 20px;
 }
 
+#modal-content>h1 {
+    align-self: flex-start;
+}
+
 #modal-content>form {
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: flex-start;
 }
 
+#modal-content>div>form>textarea,
+#modal-content>div>form>input,
+#modal-content>form>textarea,
 #modal-content>form>input {
-    background-color: rgb(24, 26, 27);
+    background-color: rgba(24, 26, 27,0);
     border-radius: 5px;
     color: lightgrey;
     margin: 5px;
-    border: lightgrey 2px solid;
+    border: 1px solid darkgrey;
     padding: 10px;
-    padding-right: 150px;
-    font-family: 'Belanosima', serif;
+    font-family: "Gordita", Helvetica, Arial, Verdana, sans-serif;
     font-size: large;
 }
 
@@ -58,6 +64,7 @@ html {
     padding: 10px 25px;
     color: white;
     border-radius: 20px;
+    align-self: flex-end;
 }
 
 #modal-content>#noDelete {

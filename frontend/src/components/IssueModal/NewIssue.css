@@ -1,0 +1,17 @@
+#issDescIn{
+    width: 750px;
+    height: 128px;
+}
+#issStsIn{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 10px;
+}
+#issStsIn>select{
+    background-color: rgba(0,0,0,0);
+    color: lightgreen;
+    width: 100px;
+    padding: 5px;
+    border-radius: 10px;
+}

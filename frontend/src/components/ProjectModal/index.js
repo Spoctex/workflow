@@ -34,16 +34,16 @@ function ProjectModal({ currTeam, edit }) {
     }
 
     return (
-        <div>
+        <>
             <h1>{edit ? 'Edit' : 'New'} Project</h1>
-            <form onSubmit={onSubmit}>
-                <input type='string' placeholder='Project Name' value={name} onChange={(e) => setName(e.target.value)} />
+            <form id='projForm' onSubmit={onSubmit}>
+                <input id='projNameIn' type='string' placeholder='Project Name' value={name} onChange={(e) => setName(e.target.value)} />
                 {submitted && errors.title && <div className='issueFormErrors'><p>{errors.title}</p></div>}
-                <textarea placeholder='Add description...' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
+                <textarea id='projDescIn' placeholder='Add description... (optional)' value={description} onChange={(e) => setDescription(e.target.value ? e.target.value : null)} />
                 {submitted && errors.description && <div className='issueFormErrors'><p>{errors.description}</p></div>}
-                <button type='submit'>{edit ? 'Confirm edit' : 'Create Project'}</button>
+                <button id='projSub' type='submit'>{edit ? 'Confirm edit' : 'Create Project'}</button>
             </form>
-        </div>
+        </>
     )
 }
 export default ProjectModal;

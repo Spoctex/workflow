@@ -39,14 +39,14 @@ function TeamModal({ edit }) {
     }
 
     return (
-        <div>
-            <h1>{edit ? 'Edit' : 'New'} Team</h1>
+        <>
+            <h1 id='teamModTtl'>{edit ? 'Edit' : 'New'} Team</h1>
             <form onSubmit={onSubmit}>
-                <input type='string' placeholder='Team Name' value={name} onChange={(e) => setName(e.target.value)} />
+                <input id='teamNameIn' type='string' placeholder='Team Name' value={name} onChange={(e) => setName(e.target.value)} />
                 {submitted && errors.title && <div className='issueFormErrors'><p>{errors.title}</p></div>}
                 <button type='submit'>{edit ? 'Confirm edit' : 'Create Team'}</button>
             </form>
-        </div>
+        </>
     )
 }
 export default TeamModal;
