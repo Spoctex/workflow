@@ -38,7 +38,7 @@ function SideBar({ isLoaded }) {
     <div className={"sideBarMain" + showBar} id="sideBarMain">
       <ProfileButton user={user} />
       {currTeam && <OpenModalButton
-        buttonText="New Issue"
+        buttonText="+ New Issue"
         id='newIss'
         modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
       />}
@@ -47,10 +47,14 @@ function SideBar({ isLoaded }) {
       {Object.values(teams).map(team => {
         return (
           <>
-            <button onClick={() => {
+            <button className="teamButt" onClick={() => {
               setCurrTeam(team.id);
               history.push(`/teams/${team.id}/issues`);
-            }}>{team.name}{team.id == currTeam ?
+            }}>
+              <p>
+              {team.name}
+              </p>
+              {team.id == currTeam ?
               <span class="material-symbols-outlined">
                 expand_less
               </span> :
@@ -80,7 +84,7 @@ function SideBar({ isLoaded }) {
         )
       })}
       <OpenModalButton
-        buttonText="New Team"
+        buttonText="+ New Team"
         id='newTeam'
         modalComponent={<TeamModal edit={false} />}
       />

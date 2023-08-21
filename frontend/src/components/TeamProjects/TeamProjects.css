@@ -1,0 +1,21 @@
+.projCard{
+    border: 1px solid white;
+    margin: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    width: 70%;
+    max-width: 2000px;
+    overflow-wrap: break-word;
+}
+
+#newProj,
+.projCard>button{
+    margin: 5px;
+    width: fit-content;
+    height: fit-content;
+    background-image: linear-gradient(92.88deg, rgb(55, 75, 145) 9.16%, rgb(57, 41, 153) 43.89%, rgb(66, 33, 157) 64.72%);
+    border: none;
+    padding: 10px;
+    color: white;
+    border-radius: 20px;
+}
