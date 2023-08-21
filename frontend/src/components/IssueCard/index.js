@@ -5,12 +5,12 @@ import { useHistory } from 'react-router-dom';
 
 
 function IssueCard({ issue, project, team }) {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
     const history = useHistory();
 
-    async function delIssue(issue, teamId) {
-        dispatch(removeIssue(issue, teamId))
-    }
+    // async function delIssue(issue, teamId) {
+    //     dispatch(removeIssue(issue, teamId))
+    // }
 
 
 
@@ -24,7 +24,7 @@ function IssueCard({ issue, project, team }) {
                 {project != 'Global' && <p>Project: {project.name}</p>}
                 {/* <p>Assigned To: {issue.assignedTo ? issue.assignedTo : 'usassigned'}</p> */}
             </div>
-            <button onClick={() => delIssue(issue, team.id)}>Remove Issue</button>
+            {/* <button onClick={() => delIssue(issue, team.id)}>Remove Issue</button> */}
         </div>
     )
 }

@@ -1,3 +1,7 @@
 .IssueCard{
     border: 2px solid red;
 }
+
+.IssueCard:hover{
+    cursor: pointer;
+}

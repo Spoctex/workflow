@@ -48,7 +48,7 @@ function Landing({ isLoaded }) {
                     />
                 </div>
             </div>
-            <img id="exmplKan" src="https://www.projectmanager.com/wp-content/uploads/2021/08/Product-launch-template-argo-redesign.jpg" />
+            <img id="exmplKan" src="https://linear.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero%404x.15e3a396.jpg&w=3840&q=75" />
         </div>
     );
 }

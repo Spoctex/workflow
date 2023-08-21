@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import SideBar from "./components/SideBar";
@@ -13,6 +13,7 @@ import TeamProjects from "./components/TeamProjects";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
+  const user = useSelector(state=>state.session.user);
   useEffect(() => {
     dispatch(sessionActions.restoreUser())
       // .then((user) => user ? dispatch(userInfo()) : dispatch(noUser()))
@@ -20,7 +21,7 @@ function App() {
   }, [dispatch]);
 
   return (
-    <div id='BarPageContainer'>
+    <div id='BarPageContainer' style={{display: user?'grid':'flex'}}>
       <div>
         <SideBar isLoaded={isLoaded} />
       </div>
