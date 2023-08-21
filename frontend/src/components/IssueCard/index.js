@@ -1,16 +1,9 @@
-import { useDispatch } from 'react-redux'
 import './IssueCard.css'
-import { removeIssue } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
 
 
 function IssueCard({ issue, project, team }) {
-    // const dispatch = useDispatch();
     const history = useHistory();
-
-    // async function delIssue(issue, teamId) {
-    //     dispatch(removeIssue(issue, teamId))
-    // }
 
 
 

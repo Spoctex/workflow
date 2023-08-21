@@ -1,16 +1,14 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
-// import { userInfo } from "../../store/teams";
 import "./Landing.css";
 
 function Landing({ isLoaded }) {
     const user = useSelector((state) => state.session.user);
     const history = useHistory();
-    // const dispatch = useDispatch();
 
     useEffect(() => {
         if (user) {

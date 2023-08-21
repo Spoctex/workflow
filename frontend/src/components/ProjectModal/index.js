@@ -1,9 +1,7 @@
 import { useDispatch } from 'react-redux';
-import { useHistory } from "react-router-dom";
-import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
 import './ProjectModal.css'
 import { useState } from 'react';
-import { createIssue, createProject, editIssue, editProject, userInfo } from '../../store/teams';
+import { createProject, editProject } from '../../store/teams';
 import { useModal } from '../../context/Modal';
 
 
@@ -11,7 +9,6 @@ import { useModal } from '../../context/Modal';
 
 function ProjectModal({ currTeam, edit }) {
     const dispatch = useDispatch();
-    const history = useHistory();
     const [name, setName] = useState(edit ? edit.name : '');
     const [description, setDescription] = useState(edit ? edit.description : null);
     const [submitted, setSubmitted] = useState(false);
@@ -34,7 +31,6 @@ function ProjectModal({ currTeam, edit }) {
         if (edit) proj.id = edit.id;
         dispatch(edit ? editProject(proj) : createProject(proj))
             .then(closeModal)
-        // console.log('passing', iss)
     }
 
     return (

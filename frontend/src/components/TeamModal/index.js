@@ -1,9 +1,8 @@
 import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
-// import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
 import './TeamModal.css'
 import { useState } from 'react';
-import { createIssue, createTeam, editIssue, editTeam, userInfo } from '../../store/teams';
+import { createTeam, editTeam} from '../../store/teams';
 import { useModal } from '../../context/Modal';
 import { useContext } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
@@ -11,11 +10,10 @@ import { CurrTeamContext } from '../../context/currTeam';
 
 
 
-function TeamModal({ currTeam, edit }) {
+function TeamModal({ edit }) {
     const dispatch = useDispatch();
     const history = useHistory();
     const [name, setName] = useState(edit ? edit.name : '');
-    // const [description, setDescription] = useState(edit ? edit.description : null);
     const [submitted, setSubmitted] = useState(false);
     const [errors, setErrors] = useState({});
     const { setCurrTeam } = useContext(CurrTeamContext);
@@ -38,7 +36,6 @@ function TeamModal({ currTeam, edit }) {
                 history.push(`/teams/${newTeam.id}/issues`);
             })
             .then(closeModal)
-        // console.log('passing', iss)
     }
 
     return (

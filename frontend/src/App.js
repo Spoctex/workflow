@@ -4,7 +4,6 @@ import { Switch, Route } from "react-router-dom";
 import * as sessionActions from "./store/session";
 import SideBar from "./components/SideBar";
 import Landing from "./components/Landing";
-// import { noUser, userInfo } from "./store/teams";
 import MyIssues from "./components/MyIssues";
 import IssueDetails from "./components/IssueDetails";
 import TeamIssues from "./components/TeamIssues";
@@ -16,7 +15,6 @@ function App() {
   const user = useSelector(state=>state.session.user);
   useEffect(() => {
     dispatch(sessionActions.restoreUser())
-      // .then((user) => user ? dispatch(userInfo()) : dispatch(noUser()))
       .then(() => setIsLoaded(true));
   }, [dispatch]);
 

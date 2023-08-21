@@ -1,6 +1,5 @@
 import './MyIssues.css';
 import { useEffect, useState } from 'react';
-import IssueCard from '../IssueCard';
 import { useSelector } from 'react-redux';
 import IssueBoard from '../IssueBoard';
 
@@ -21,8 +20,6 @@ function MyIssues() {
             })
         });
         setUserIssues(issues)
-        // console.log('MyIssues',user)
-        // console.log('MyIssues',issues)
     }, [teams])
 
     return (

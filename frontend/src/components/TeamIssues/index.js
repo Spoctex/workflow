@@ -7,11 +7,9 @@ import { useParams } from 'react-router-dom';
 import IssueBoard from '../IssueBoard';
 
 function TeamIssues() {
-    const user = useSelector(state => state.session.user);
     const teams = useSelector(state => state.teams);
     const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
     const [userIssues, setUserIssues] = useState([]);
-    // const [filter, setFilter] = useState('all');
     const { teamId } = useParams();
 
     useEffect(() => {

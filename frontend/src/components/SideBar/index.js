@@ -16,7 +16,6 @@ function SideBar({ isLoaded }) {
   const teams = useSelector(state => state.teams);
   const { teamId } = useParams();
   const [showBar, setShowBar] = useState(" hidden");
-  // const [openTeam, setOpenTeam] = useState();
   const history = useHistory();
   const dispatch = useDispatch();
 
@@ -32,13 +31,11 @@ function SideBar({ isLoaded }) {
         setCurrTeam(teamId);
       }
     }
-    // console.log(openTeam)
   }, [user, isLoaded, teamId])
 
 
   return (
     <div className={"sideBarMain" + showBar} id="sideBarMain">
-      {/* <div id='topBar'> */}
       <ProfileButton user={user} />
       {currTeam && <OpenModalButton
         buttonText="New Issue"
@@ -46,10 +43,8 @@ function SideBar({ isLoaded }) {
         modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
       />}
       <button onClick={() => history.push('/myIssues')}>My Issues</button>
-      {/* </div> */}
       <p id="yTems">Your Teams</p>
       {Object.values(teams).map(team => {
-        // console.log('SideBar',teams)
         return (
           <>
             <button onClick={() => {
@@ -91,12 +86,6 @@ function SideBar({ isLoaded }) {
       />
     </div>
   );
-
-  // return (
-  //   <ul className={showBar ? "" : " hidden"}>
-  //     {isLoaded && sessionLinks}
-  //   </ul>
-  // );
 }
 
 export default SideBar;

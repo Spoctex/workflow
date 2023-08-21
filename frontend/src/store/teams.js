@@ -103,7 +103,6 @@ const delTeam =(teamId)=>{
 export const userInfo = () => async (dispatch) => {
     let all = await csrfFetch('/api/users/teams');
     all = await all.json();
-    // console.log('Thunk',all)
     let allFlat = {};
     all.forEach(team => {
         let teamFlat = {
@@ -123,7 +122,6 @@ export const userInfo = () => async (dispatch) => {
         });
         allFlat[team.id] = teamFlat;
     });
-    // console.log('Thunk (flat)',allFlat)
     dispatch(setAll(allFlat));
 }
 
