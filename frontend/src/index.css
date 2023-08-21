@@ -78,7 +78,13 @@ html {
 
 #modal-content>form>button:disabled,
 #modal-content>button:disabled {
+    background-image: none;
     background-color: grey;
+    cursor: default;
+}
+
+#modal-content>#demoButton {
+    align-self: flex-end;
 }
 
 #modal-content>#demoButton:hover {
