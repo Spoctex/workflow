@@ -1,0 +1,13 @@
+.commentCard{
+    border: solid lightgrey 1px;
+
+}
+
+.repliesIn{
+    border: none;
+    background-color: inherit;
+    width: 99%;
+}
+.repliesIn:enabled:focus{
+    border: none;
+}

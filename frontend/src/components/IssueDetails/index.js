@@ -7,6 +7,8 @@ import { removeIssue } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
+import { useState } from 'react';
+import CommentCard from '../CommentCard';
 
 
 function IssueDetails() {
@@ -15,6 +17,7 @@ function IssueDetails() {
     const history = useHistory();
     const teams = useSelector(state => state.teams);
     const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
+    // const [commentsDisplayed, setCommentsDisplayed] = useState(new Set())
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
@@ -42,6 +45,12 @@ function IssueDetails() {
                     <div id='issDesc3'>
                         <p id='issTitle'>{issue?.title}</p>
                         <p id={'issDesc'} className={'' + (issue?.description ? '' : 'empty')}>{issue?.description ? issue.description : "Add a description with the 'Edit Issue' button to the right"}</p>
+                        <p>Comments</p>
+                        {issue?.Comments && Object.values(issue.Comments).map(comment => {
+                            if (!comment.replyOf) return (
+                                <CommentCard comment={comment} team={team} Comments={issue.Comments} />
+                            )
+                        })}
                     </div>
                 </div>
             </div>
