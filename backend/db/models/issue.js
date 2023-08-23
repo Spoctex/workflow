@@ -18,6 +18,8 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: 'assignedId' })
       Issue.belongsTo(models.Project,
         { foreignKey: 'projectId' })
+      Issue.hasMany(models.Comment,
+        { foreignKey: 'issueId' })
     }
   }
   Issue.init({

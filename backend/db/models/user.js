@@ -15,6 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         { foreignKey: 'leadId' })
       User.hasMany(models.Issue,
         { foreignKey: 'assignedId' })
+      User.hasMany(models.Comment,
+        { foreignKey: 'posterId' })
       User.belongsToMany(models.Team,
         {
           through: models.Member,
