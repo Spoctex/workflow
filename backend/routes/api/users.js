@@ -84,7 +84,11 @@ router.get('/teams',
             model: Issue,
             include: {
               model: Comment,
-              include: Comment
+              include: {
+                model: Comment,
+                attributes: ['id'],
+                as: 'Replies',
+              }
             }
           }
         }

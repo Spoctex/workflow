@@ -14,7 +14,7 @@ module.exports = (sequelize, DataTypes) => {
       Comment.belongsTo(models.User,
         { foreignKey: 'posterId' })
       Comment.hasMany(models.Comment,
-        { foreignKey: 'replyOf' })
+        { foreignKey: 'replyOf', as:'Replies' })
     }
   }
   Comment.init({

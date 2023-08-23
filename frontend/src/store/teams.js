@@ -61,38 +61,38 @@ const postTeam = (newTeam) => {
     }
 }
 
-const putTeam = (newTeam) =>{
-    return{
-        type:EDIT_TEAM,
+const putTeam = (newTeam) => {
+    return {
+        type: EDIT_TEAM,
         newTeam
     }
 }
 
-const postProject = (newProject) =>{
+const postProject = (newProject) => {
     return {
         type: CREATE_PROJECT,
         newProject
     }
 }
 
-const putProject = (newProject) =>{
-    return{
-        type:EDIT_PROJECT,
+const putProject = (newProject) => {
+    return {
+        type: EDIT_PROJECT,
         newProject
     }
 }
 
-const delProject =(teamId,projId)=>{
-    return{
-        type:DELETE_PROJECT,
+const delProject = (teamId, projId) => {
+    return {
+        type: DELETE_PROJECT,
         projId,
         teamId
     }
 }
 
-const delTeam =(teamId)=>{
-    return{
-        type:DELETE_TEAM,
+const delTeam = (teamId) => {
+    return {
+        type: DELETE_TEAM,
         teamId
     }
 }
@@ -116,7 +116,13 @@ export const userInfo = () => async (dispatch) => {
         team.Projects.forEach(proj => {
             let projFlat = { ...proj, Issues: {} };
             proj.Issues.forEach(iss => {
-                projFlat.Issues[iss.id] = iss;
+                let issFlat = { ...iss, Comments: {} };
+                iss.Comments.forEach(comm => {
+                    let commFlat = { ...comm, Replies: [] };
+                    comm.Replies.forEach(rep => { commFlat.Replies.push(rep.id) });
+                    issFlat.Comments[comm.id] = commFlat;
+                });
+                projFlat.Issues[iss.id] = issFlat;
             });
             teamFlat.Projects[proj.id] = projFlat;
         });
@@ -150,7 +156,7 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
         body: JSON.stringify(edit)
     });
     newIss = await newIss.json();
-    dispatch(putIssue(newIss, edit.currTeam,edit.oldProj))
+    dispatch(putIssue(newIss, edit.currTeam, edit.oldProj))
 }
 
 export const createTeam = (team) => async (dispatch) => {
@@ -159,28 +165,28 @@ export const createTeam = (team) => async (dispatch) => {
         body: JSON.stringify(team)
     })
     newTeam = await newTeam.json();
-        let teamFlat = {
-            ...newTeam,
-            Members: {},
-            Projects: {}
-        };
-        newTeam.Members.forEach(mem => {
-            teamFlat.Members[mem.id] = mem;
+    let teamFlat = {
+        ...newTeam,
+        Members: {},
+        Projects: {}
+    };
+    newTeam.Members.forEach(mem => {
+        teamFlat.Members[mem.id] = mem;
+    });
+    newTeam.Projects.forEach(proj => {
+        let projFlat = { ...proj, Issues: {} };
+        proj.Issues.forEach(iss => {
+            projFlat.Issues[iss.id] = iss;
         });
-        newTeam.Projects.forEach(proj => {
-            let projFlat = { ...proj, Issues: {} };
-            proj.Issues.forEach(iss => {
-                projFlat.Issues[iss.id] = iss;
-            });
-            teamFlat.Projects[proj.id] = projFlat;
-        });
+        teamFlat.Projects[proj.id] = projFlat;
+    });
     dispatch(postTeam(teamFlat));
     return teamFlat;
 }
 
 export const editTeam = (team) => async (dispatch) => {
-    let newTeam = await csrfFetch(`/api/teams/${team.id}`,{
-        method:'PUT',
+    let newTeam = await csrfFetch(`/api/teams/${team.id}`, {
+        method: 'PUT',
         body: JSON.stringify(team)
     });
     newTeam = await newTeam.json();
@@ -189,19 +195,19 @@ export const editTeam = (team) => async (dispatch) => {
 }
 
 export const createProject = (project) => async (dispatch) => {
-    let newProj = await csrfFetch('/api/projects',{
+    let newProj = await csrfFetch('/api/projects', {
         method: 'POST',
         body: JSON.stringify(project)
     });
     newProj = await newProj.json();
-    newProj.Issues ={};
+    newProj.Issues = {};
     dispatch(postProject(newProj));
     return newProj;
 }
 
 export const editProject = (project) => async (dispatch) => {
-    let newProject = await csrfFetch(`/api/projects/${project.id}`,{
-        method:'PUT',
+    let newProject = await csrfFetch(`/api/projects/${project.id}`, {
+        method: 'PUT',
         body: JSON.stringify(project)
     });
     newProject = await newProject.json();
@@ -210,12 +216,12 @@ export const editProject = (project) => async (dispatch) => {
 }
 
 export const deleteProject = (project) => async (dispatch) => {
-    await csrfFetch(`/api/projects/${project.id}`,{ method: 'DELETE'});
-    return dispatch(delProject(project.teamId,project.id));
+    await csrfFetch(`/api/projects/${project.id}`, { method: 'DELETE' });
+    return dispatch(delProject(project.teamId, project.id));
 }
 
 export const deleteTeam = (team) => async (dispatch) => {
-    await csrfFetch(`/api/teams/${team.id}`,{ method: 'DELETE'});
+    await csrfFetch(`/api/teams/${team.id}`, { method: 'DELETE' });
     return dispatch(delTeam(team.id));
 }
 
