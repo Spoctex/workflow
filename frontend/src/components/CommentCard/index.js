@@ -1,7 +1,9 @@
+import { useState } from 'react';
 import './CommentCard.css'
 
 
 function CommentCard({ comment, team, Comments }) {
+    const [replying, setReplying] = useState(false)
 
 
     return (
@@ -17,9 +19,12 @@ function CommentCard({ comment, team, Comments }) {
                     </div>
                 )
             })}
-            {/* {comment.Replies.length &&
-            <input className='repliesIn' type='string' placeholder='Leave a reply...'></input>
-            } */}
+            {comment.Replies.length &&
+                <form className='repliesIn1'>
+                    <input className='repliesIn' type='string' placeholder='Leave a reply...' ></input>
+                    <button>Submit</button>
+                </form>
+            }
         </div>
     )
 }

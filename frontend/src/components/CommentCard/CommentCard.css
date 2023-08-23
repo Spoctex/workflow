@@ -6,8 +6,18 @@
 .repliesIn{
     border: none;
     background-color: inherit;
-    width: 99%;
+    width: 100%;
+    color: lightgrey;
 }
-.repliesIn:enabled:focus{
-    border: none;
+
+.repliesIn:focus{
+    outline: none;
+}
+
+.repliesIn+button{
+    display: none;
+}
+
+.repliesIn:focus+button{
+    display: block;
 }
