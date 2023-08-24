@@ -5,7 +5,7 @@ import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
 import { removeIssue } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
 import { useState } from 'react';
 import CommentCard from '../CommentCard';
@@ -21,6 +21,25 @@ function IssueDetails() {
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
+    const [comment, setComment] = useState('');
+    const [errors, setErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
+    const [focused, setFocused] = useState(false);
+    const focusTimeoutRef = useRef(null);
+
+    const handleFocus = () => {
+        clearTimeout(focusTimeoutRef.current);
+        setFocused(true);
+    };
+
+    const handleBlur = () => {
+        focusTimeoutRef.current = setTimeout(() => {
+            if (!comment) {
+                setFocused(false);
+                setErrors({});
+            }
+        }, 100); // Adjust the delay (in milliseconds) according to your needs
+    };
 
     useEffect(() => {
         if (currTeam != teamId) setCurrTeam(teamId);
@@ -30,6 +49,22 @@ function IssueDetails() {
         dispatch(removeIssue(issue, teamId))
             .then(() => history.goBack())
     }
+
+    async function onSubmit(e) {
+        e.preventDefault();
+        setHasSubmitted(true);
+        if (!comment) {
+            document.getElementById('commentIn').focus();
+            setErrors({ comment: 'Please add a comment' });
+            return;
+        }
+        if (comment.length > 400) {
+            document.getElementById('commentIn').focus();
+            setErrors({ comment: 'Please keep comments under 400 characters in length' });
+            return;
+        }
+    }
+
 
 
     return (
@@ -51,6 +86,23 @@ function IssueDetails() {
                                 <CommentCard comment={comment} team={team} Comments={issue.Comments} />
                             )
                         })}
+                        <form id='commentIn1' onSubmit={onSubmit}>
+                            <textarea id='commentIn'
+                                type='string'
+                                placeholder='Leave a comment...'
+                                onInput={(e) => {
+                                    e.target.style.height = 0;
+                                    e.target.style.height = e.target.scrollHeight + 'px';
+                                }}
+                                onFocus={handleFocus}
+                                onBlur={handleBlur}
+                                value={comment}
+                                onChange={(e)=>setComment(e.target.value)}/>
+                            <div id='commAct'>
+                                {hasSubmitted && <p className='error'>{errors.comment}</p>}
+                                <button type='submit'>Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

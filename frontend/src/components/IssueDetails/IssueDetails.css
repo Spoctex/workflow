@@ -75,3 +75,23 @@
     color: white;
     border-radius: 20px;
 }
+
+#commentIn1{
+    border: solid 1px lightgrey;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+#commentIn{
+    background-color: inherit;
+    border: none;
+    outline: none;
+    color: lightgrey;
+    resize: none;
+    width: 100%;
+    min-height: 75px;
+}
+#commAct{
+    display: flex;
+    justify-content: end;
+}

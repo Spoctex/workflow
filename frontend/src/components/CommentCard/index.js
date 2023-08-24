@@ -74,9 +74,7 @@ function CommentCard({ comment, team, Comments }) {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         value={reply}
-                        onChange={(e) => setReply(e.target.value)}
-                    // onMouseEnter={cancelBlur}
-                    ></textarea>
+                        onChange={(e) => setReply(e.target.value)}/>
                     <div className={'replyAct' + (focused ? ' show' : ' hide')}>
                         {hasSubmitted && <p className='error'>{errors.reply}</p>}
                         <button type='submit'>Submit</button>
