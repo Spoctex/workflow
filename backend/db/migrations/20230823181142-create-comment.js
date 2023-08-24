@@ -12,18 +12,18 @@ module.exports = {
       issueId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // references: { model: 'Issues' },
+        references: { model: 'Issues' },
         onDelete: 'CASCADE'
       },
       posterId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        // references: { model: 'Users' },
+        references: { model: 'Users' },
         onDelete: 'CASCADE'
       },
       replyOf: {
         type: Sequelize.INTEGER,
-        // references: { model: 'Comments' },
+        references: { model: 'Comments' },
         onDelete: 'CASCADE'
       },
       comment: {
