@@ -3,7 +3,7 @@ import './IssueDetails.css'
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
-import { removeIssue } from '../../store/teams';
+import { addComment, removeIssue, userInfo } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
@@ -16,6 +16,7 @@ function IssueDetails() {
     const { teamId, projId, issueId } = useParams();
     const history = useHistory();
     const teams = useSelector(state => state.teams);
+    const user = useSelector(state => state.session.user)
     const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
     // const [commentsDisplayed, setCommentsDisplayed] = useState(new Set())
     const team = teams[teamId];
@@ -24,22 +25,6 @@ function IssueDetails() {
     const [comment, setComment] = useState('');
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
-    const [focused, setFocused] = useState(false);
-    const focusTimeoutRef = useRef(null);
-
-    const handleFocus = () => {
-        clearTimeout(focusTimeoutRef.current);
-        setFocused(true);
-    };
-
-    const handleBlur = () => {
-        focusTimeoutRef.current = setTimeout(() => {
-            if (!comment) {
-                setFocused(false);
-                setErrors({});
-            }
-        }, 100); // Adjust the delay (in milliseconds) according to your needs
-    };
 
     useEffect(() => {
         if (currTeam != teamId) setCurrTeam(teamId);
@@ -48,6 +33,17 @@ function IssueDetails() {
     async function delIssue(issue, teamId) {
         dispatch(removeIssue(issue, teamId))
             .then(() => history.goBack())
+    }
+
+    async function createComment(comment, replyOf = null) {
+        await dispatch(addComment({
+            issueId: issue.id,
+            posterId: user.id,
+            replyOf,
+            comment,
+            projId:project.id,
+            teamId:team.id
+        }))
     }
 
     async function onSubmit(e) {
@@ -63,6 +59,10 @@ function IssueDetails() {
             setErrors({ comment: 'Please keep comments under 400 characters in length' });
             return;
         }
+        await createComment(comment);
+        setErrors({});
+        setComment('');
+        setHasSubmitted(false);
     }
 
 
@@ -83,7 +83,7 @@ function IssueDetails() {
                         <p>Comments</p>
                         {issue?.Comments && Object.values(issue.Comments).map(comment => {
                             if (!comment.replyOf) return (
-                                <CommentCard comment={comment} team={team} Comments={issue.Comments} />
+                                <CommentCard comment={comment} team={team} Comments={issue.Comments} createReply={createComment} />
                             )
                         })}
                         <form id='commentIn1' onSubmit={onSubmit}>
@@ -94,10 +94,8 @@ function IssueDetails() {
                                     e.target.style.height = 0;
                                     e.target.style.height = e.target.scrollHeight + 'px';
                                 }}
-                                onFocus={handleFocus}
-                                onBlur={handleBlur}
                                 value={comment}
-                                onChange={(e)=>setComment(e.target.value)}/>
+                                onChange={(e) => setComment(e.target.value)} />
                             <div id='commAct'>
                                 {hasSubmitted && <p className='error'>{errors.comment}</p>}
                                 <button type='submit'>Submit</button>

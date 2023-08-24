@@ -2,7 +2,7 @@ import { useRef, useState } from 'react';
 import './CommentCard.css'
 
 
-function CommentCard({ comment, team, Comments }) {
+function CommentCard({ comment, team, Comments, createReply }) {
     const [reply, setReply] = useState('');
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
@@ -37,6 +37,11 @@ function CommentCard({ comment, team, Comments }) {
             setErrors({ reply: 'Please keep comments under 400 characters in length' });
             return;
         }
+        await createReply(reply, comment.id);
+        setErrors({});
+        setReply('');
+        setHasSubmitted(false);
+        setFocused(false);
     }
 
     return (
@@ -44,10 +49,10 @@ function CommentCard({ comment, team, Comments }) {
             <div className='commHead'>
                 <p>{team.Members[comment.posterId].username}</p>
                 <button
-                onClick={() => {
-                    setFocused(true);
-                    setTimeout(()=>document.getElementById(`repIn${comment.id}`).focus(),100)
-                }}>Reply</button>
+                    onClick={() => {
+                        setFocused(true);
+                        setTimeout(() => document.getElementById(`repIn${comment.id}`).focus(), 100)
+                    }}>Reply</button>
             </div>
             <p>{comment.comment}</p>
             {comment.Replies.map(rep => {
@@ -74,7 +79,7 @@ function CommentCard({ comment, team, Comments }) {
                         onFocus={handleFocus}
                         onBlur={handleBlur}
                         value={reply}
-                        onChange={(e) => setReply(e.target.value)}/>
+                        onChange={(e) => setReply(e.target.value)} />
                     <div className={'replyAct' + (focused ? ' show' : ' hide')}>
                         {hasSubmitted && <p className='error'>{errors.reply}</p>}
                         <button type='submit'>Submit</button>

@@ -11,6 +11,9 @@ const DELETE_PROJECT = 'project/delete';
 const CREATE_TEAM = 'team/post';
 const EDIT_TEAM = 'team/put';
 const DELETE_TEAM = 'team/delete';
+const POST_COMMENT = 'comment/post';
+const PUT_COMMENT = 'comment/put';
+const DELETE_COMMENT = 'comment/delete';
 
 
 
@@ -93,6 +96,16 @@ const delProject = (teamId, projId) => {
 const delTeam = (teamId) => {
     return {
         type: DELETE_TEAM,
+        teamId
+    }
+}
+
+const postComm = (comm, issId, projId, teamId) => {
+    return {
+        type: POST_COMMENT,
+        comm,
+        issId,
+        projId,
         teamId
     }
 }
@@ -225,6 +238,22 @@ export const deleteTeam = (team) => async (dispatch) => {
     return dispatch(delTeam(team.id));
 }
 
+export const addComment = (comm) => async (dispatch) => {
+    const { issueId, posterId, replyOf, comment } = comm;
+    let newComm = await csrfFetch('/api/comments', {
+        method: 'POST',
+        body: JSON.stringify({
+            issueId,
+            posterId,
+            replyOf,
+            comment
+        })
+    });
+    newComm = await newComm.json();
+    newComm.Replies = [];
+    return dispatch(postComm(newComm, comm.issueId, comm.projId, comm.teamId));
+}
+
 
 //REDUCER=========================================================================
 const initialState = {};
@@ -273,6 +302,12 @@ const teamReducer = (state = initialState, action) => {
         case DELETE_TEAM:
             newState = Object.assign({}, state);
             delete newState[action.teamId];
+            return newState;
+        case POST_COMMENT:
+            newState = Object.assign({}, state);
+            const { teamId, projId, issId, comm } = action;
+            newState[teamId].Projects[projId].Issues[issId].Comments[comm.id] = comm;
+            if (comm.replyOf) newState[teamId].Projects[projId].Issues[issId].Comments[comm.replyOf].Replies.push(comm.id);
             return newState;
         default:
             return state;
