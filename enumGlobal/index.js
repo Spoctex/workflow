@@ -21,6 +21,4 @@ const issueLabel = [
 
 
 
-//test
-
 module.exports = { issuePriority, issueStatus, issueLabel }
