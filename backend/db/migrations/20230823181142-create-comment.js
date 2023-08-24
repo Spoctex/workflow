@@ -12,7 +12,7 @@ module.exports = {
       issueId: {
         allowNull: false,
         type: Sequelize.INTEGER,
-        references: { model: 'Issues' },
+        // references: { model: 'Issues' },
         onDelete: 'CASCADE'
       },
       posterId: {
