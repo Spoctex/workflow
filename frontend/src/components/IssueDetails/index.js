@@ -3,10 +3,12 @@ import './IssueDetails.css'
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
-import { removeIssue } from '../../store/teams';
+import { addComment, removeIssue, userInfo } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
+import { useState } from 'react';
+import CommentCard from '../CommentCard';
 
 
 function IssueDetails() {
@@ -14,10 +16,15 @@ function IssueDetails() {
     const { teamId, projId, issueId } = useParams();
     const history = useHistory();
     const teams = useSelector(state => state.teams);
+    const user = useSelector(state => state.session.user)
     const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
+    // const [commentsDisplayed, setCommentsDisplayed] = useState(new Set())
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
+    const [comment, setComment] = useState('');
+    const [errors, setErrors] = useState({});
+    const [hasSubmitted, setHasSubmitted] = useState(false);
 
     useEffect(() => {
         if (currTeam != teamId) setCurrTeam(teamId);
@@ -27,6 +34,37 @@ function IssueDetails() {
         dispatch(removeIssue(issue, teamId))
             .then(() => history.goBack())
     }
+
+    async function createComment(comment, replyOf = null) {
+        await dispatch(addComment({
+            issueId: issue.id,
+            posterId: user.id,
+            replyOf,
+            comment,
+            projId:project.id,
+            teamId:team.id
+        }))
+    }
+
+    async function onSubmit(e) {
+        e.preventDefault();
+        setHasSubmitted(true);
+        if (!comment) {
+            document.getElementById('commentIn').focus();
+            setErrors({ comment: 'Please add a comment' });
+            return;
+        }
+        if (comment.length > 400) {
+            document.getElementById('commentIn').focus();
+            setErrors({ comment: 'Please keep comments under 400 characters in length' });
+            return;
+        }
+        await createComment(comment);
+        setErrors({});
+        setComment('');
+        setHasSubmitted(false);
+    }
+
 
 
     return (
@@ -42,6 +80,27 @@ function IssueDetails() {
                     <div id='issDesc3'>
                         <p id='issTitle'>{issue?.title}</p>
                         <p id={'issDesc'} className={'' + (issue?.description ? '' : 'empty')}>{issue?.description ? issue.description : "Add a description with the 'Edit Issue' button to the right"}</p>
+                        <p>Comments</p>
+                        {issue?.Comments && Object.values(issue.Comments).map(comment => {
+                            if (!comment.replyOf) return (
+                                <CommentCard comment={comment} team={team} Comments={issue.Comments} createReply={createComment} />
+                            )
+                        })}
+                        <form id='commentIn1' onSubmit={onSubmit}>
+                            <textarea id='commentIn'
+                                type='string'
+                                placeholder='Leave a comment...'
+                                onInput={(e) => {
+                                    e.target.style.height = 0;
+                                    e.target.style.height = e.target.scrollHeight + 'px';
+                                }}
+                                value={comment}
+                                onChange={(e) => setComment(e.target.value)} />
+                            <div id='commAct'>
+                                {hasSubmitted && <p className='error'>{errors.comment}</p>}
+                                <button type='submit'>Submit</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             </div>

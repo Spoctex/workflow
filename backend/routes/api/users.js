@@ -4,7 +4,7 @@ const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User, Team, Project, Issue } = require('../../db/models');
+const { User, Team, Project, Issue, Comment } = require('../../db/models');
 const { Op } = require('sequelize');
 
 const router = express.Router();
@@ -80,7 +80,17 @@ router.get('/teams',
         model: Team,
         include: {
           model: Project,
-          include: Issue
+          include: {
+            model: Issue,
+            include: {
+              model: Comment,
+              include: {
+                model: Comment,
+                attributes: ['id'],
+                as: 'Replies',
+              }
+            }
+          }
         }
       }
     })

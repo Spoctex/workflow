@@ -3,6 +3,7 @@ const sessionRouter = require('./session.js');
 const usersRouter = require('./users.js');
 const issuesRouter = require('./issues.js');
 const teamsRouter = require('./teams.js');
+const commentsRouter = require('./comments.js');
 const projectsRouter = require('./projects.js');
 const { restoreUser } = require("../../utils/auth.js");
 
@@ -18,6 +19,8 @@ router.use('/users', usersRouter);
 router.use('/issues', issuesRouter);
 
 router.use('/teams', teamsRouter);
+
+router.use('/comments', commentsRouter);
 
 router.use('/projects', projectsRouter);
 

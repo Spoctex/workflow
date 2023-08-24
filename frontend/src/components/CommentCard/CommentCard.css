@@ -1,0 +1,72 @@
+.commentCard{
+    border: solid lightgrey 1px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+}
+
+.reply>p,
+.commentCard>p{
+    padding: 10px;
+    margin: 0;
+}
+
+.commHead{
+    display: flex;
+    width: 98%;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+
+.commHead>p{
+    margin: 0;
+}
+
+.reply{
+    width: 100%;
+    border-top: solid lightgrey 1px;
+}
+
+.repliesIn{
+    border: none;
+    background-color: inherit;
+    width: 100%;
+    color: lightgrey;
+    resize: none;
+}
+
+.repliesIn:focus{
+    outline: none;
+}
+
+.repliesIn1{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    padding: 10px;
+    border-top: solid lightgrey 1px;
+}
+/*
+.repliesIn+div{
+    display: none;
+}
+
+.repliesIn:focus+div{
+    display: flex;
+} */
+
+.replyAct{
+    width: 100%;
+    justify-content: flex-end;
+}
+.show{
+    display: flex;
+}
+.hide{
+    display: none;
+}
+.error{
+    padding: 0;
+    margin: 0;
+    margin-right: 10px;
+}
