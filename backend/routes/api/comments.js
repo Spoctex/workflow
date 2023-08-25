@@ -17,6 +17,20 @@ router.post('/', async(req,res,next)=>{
 });
 
 
+router.put('/:id', async(req,res,next)=>{
+    let comm = await Comment.findByPk(req.params.id);
+    comm.comment = req.body.comm;
+    await comm.save();
+    return res.json(comm);
+});
+
+router.delete('/:id', async(req,res,next)=>{
+    let comm = await Comment.findByPk(req.params.id);
+    await comm.destroy();
+    return res.json({message: 'Successfully deleted'});
+})
+
+
 
 
 module.exports = router;
