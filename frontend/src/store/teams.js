@@ -355,7 +355,7 @@ const teamReducer = (state = initialState, action) => {
             const { teamId, projId, issId, comm } = action;
             if (comm.replyOf) {
                 let mainComm = newState[teamId].Projects[projId].Issues[issId].Comments[comm.replyOf];
-                let repDex = mainComm.Replies.findIndex(comm.id);
+                let repDex = mainComm.Replies.findIndex((x) => x == comm.id);
                 mainComm.Replies.splice(repDex, 1);
             }
             else for (let i = 0; i < comm.Replies.length; i++) delete newState[teamId].Projects[projId].Issues[issId].Comments[comm.Replies[i]];

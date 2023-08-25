@@ -5,7 +5,7 @@
 }
 
 .reply>p,
-.commentCard>p{
+.commentCard>div>p{
     padding: 10px;
     margin: 0;
 }
@@ -69,4 +69,17 @@
     padding: 0;
     margin: 0;
     margin-right: 10px;
+}
+#repEdit{
+    border-top: none;
+}
+
+.commHead>div{
+    display: none;
+}
+.reply:hover>div>div{
+    display: block;
+}
+.commMain:hover>div>div{
+    display: block;
 }

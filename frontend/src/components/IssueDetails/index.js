@@ -83,7 +83,7 @@ function IssueDetails() {
                         <p>Comments</p>
                         {issue?.Comments && Object.values(issue.Comments).map(comment => {
                             if (!comment.replyOf) return (
-                                <CommentCard comment={comment} team={team} Comments={issue.Comments} createReply={createComment} />
+                                <CommentCard comment={comment} team={team} project={project} Comments={issue.Comments} createReply={createComment} />
                             )
                         })}
                         <form id='commentIn1' onSubmit={onSubmit}>
