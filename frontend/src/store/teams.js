@@ -110,6 +110,26 @@ const postComm = (comm, issId, projId, teamId) => {
     }
 }
 
+const putComm = (comm, issId, projId, teamId) => {
+    return {
+        type: PUT_COMMENT,
+        comm,
+        issId,
+        projId,
+        teamId
+    }
+}
+
+const delComm = (comm, issId, projId, teamId) => {
+    return {
+        type: DELETE_COMMENT,
+        comm,
+        issId,
+        projId,
+        teamId
+    }
+}
+
 
 
 //THUNKS=========================================================================================
@@ -254,6 +274,20 @@ export const addComment = (comm) => async (dispatch) => {
     return dispatch(postComm(newComm, comm.issueId, comm.projId, comm.teamId));
 }
 
+export const editComment = (comm) => async (dispatch) => {
+    let editComm = await csrfFetch(`/api/comments/${comm.id}`, {
+        method: 'PUT',
+        body: JSON.stringify({ comm: comm.comment })
+    });
+    editComm = await editComm.json();
+    return dispatch(putComm(editComm, comm.issueId, comm.projId, comm.teamId));
+}
+
+export const delComment = (comm) => async (dispatch) => {
+    await csrfFetch(`/api/comments/${comm.id}`, { method: 'DELETE' });
+    return dispatch(delComm(comm, comm.issueId, comm.projId, comm.teamId));
+}
+
 
 //REDUCER=========================================================================
 const initialState = {};
@@ -303,12 +337,31 @@ const teamReducer = (state = initialState, action) => {
             newState = Object.assign({}, state);
             delete newState[action.teamId];
             return newState;
-        case POST_COMMENT:
+        case POST_COMMENT: {
             newState = Object.assign({}, state);
             const { teamId, projId, issId, comm } = action;
             newState[teamId].Projects[projId].Issues[issId].Comments[comm.id] = comm;
             if (comm.replyOf) newState[teamId].Projects[projId].Issues[issId].Comments[comm.replyOf].Replies.push(comm.id);
             return newState;
+        }
+        case PUT_COMMENT: {
+            newState = Object.assign({}, state);
+            const { teamId, projId, issId, comm } = action;
+            newState[teamId].Projects[projId].Issues[issId].Comments[comm.id].comment = comm.comment;
+            return newState;
+        }
+        case DELETE_COMMENT: {
+            newState = Object.assign({}, state);
+            const { teamId, projId, issId, comm } = action;
+            if (comm.replyOf) {
+                let mainComm = newState[teamId].Projects[projId].Issues[issId].Comments[comm.replyOf];
+                let repDex = mainComm.Replies.findIndex(comm.id);
+                mainComm.Replies.splice(repDex, 1);
+            }
+            else for (let i = 0; i < comm.Replies.length; i++) delete newState[teamId].Projects[projId].Issues[issId].Comments[comm.Replies[i]];
+            delete newState[teamId].Projects[projId].Issues[issId].Comments[comm.id];
+            return newState;
+        }
         default:
             return state;
     }
