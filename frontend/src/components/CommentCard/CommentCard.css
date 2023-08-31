@@ -1,51 +1,56 @@
-.commentCard{
-    border: solid lightgrey 1px;
+.commentCard {
+    border: solid rgb(44, 46, 60) 1px;
+    box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px;
+    background-color: #20212E;
     margin-bottom: 20px;
     border-radius: 10px;
 }
 
 .reply>p,
-.commentCard>div>p{
+.commentCard>div>p {
     padding: 10px;
     margin: 0;
 }
 
-.commHead{
+.commHead {
     display: flex;
     width: 98%;
     justify-content: space-between;
     align-items: center;
-    padding: 10px;
+    padding: 18px 10px;
 }
 
-.commHead>p{
+.commHead>p {
     margin: 0;
 }
 
-.reply{
+.reply {
     width: 100%;
-    border-top: solid lightgrey 1px;
+    border-top: solid rgb(44, 46, 60) 1px;
 }
 
-.repliesIn{
+.repliesIn {
     border: none;
     background-color: inherit;
     width: 100%;
-    color: lightgrey;
+    font-family: "Gordita", Helvetica, Arial, Verdana, sans-serif;
+    font-size: 16px;
+    color: white;
     resize: none;
 }
 
-.repliesIn:focus{
+.repliesIn:focus {
     outline: none;
 }
 
-.repliesIn1{
+.repliesIn1 {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
     padding: 10px;
-    border-top: solid lightgrey 1px;
+    border-top: solid rgb(44, 46, 60) 1px;
 }
+
 /*
 .repliesIn+div{
     display: none;
@@ -55,31 +60,57 @@
     display: flex;
 } */
 
-.replyAct{
+.replyAct {
     width: 100%;
     justify-content: flex-end;
 }
-.show{
+
+.show {
     display: flex;
 }
-.hide{
+
+.hide {
     display: none;
 }
-.error{
+
+.error {
     padding: 0;
     margin: 0;
     margin-right: 10px;
 }
-#repEdit{
+
+#repEdit {
     border-top: none;
 }
 
-.commHead>div{
+.commHead>div {
     display: none;
 }
-.reply:hover>div>div{
+
+.reply:hover>div>div {
     display: block;
 }
-.commMain:hover>div>div{
+
+.commMain:hover>div>div {
     display: block;
+}
+
+.reply:hover>div {
+    padding: 10px 10px;
+}
+
+.commMain:hover>div {
+    padding: 10px 10px;
+}
+
+.commCardButton {
+    width: fit-content;
+    height: fit-content;
+    background-image: linear-gradient(92.88deg, rgb(55, 75, 145) 9.16%, rgb(57, 41, 153) 43.89%, rgb(66, 33, 157) 64.72%);
+    border: none;
+    padding: 10px;
+    padding-bottom: 9px;
+    color: white;
+    border-radius: 20px;
+    margin-left: 10px;
 }

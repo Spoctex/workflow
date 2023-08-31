@@ -74,7 +74,7 @@ function IssueDetails() {
         setStatus(issue?.status)
         setLabel(issue?.label)
         setPriority(issue?.priority)
-    }, [teamId,issue?.id])
+    }, [teamId, issue?.id])
 
     async function delIssue(issue, teamId) {
         dispatch(removeIssue(issue, teamId))
@@ -87,8 +87,8 @@ function IssueDetails() {
             posterId: user.id,
             replyOf,
             comment,
-            projId:project.id,
-            teamId:team.id
+            projId: project.id,
+            teamId: team.id
         }))
     }
 
@@ -125,11 +125,11 @@ function IssueDetails() {
                 <div id='issDesc2'>
                     <div id='issDesc3'>
                         <input type='string' id='issTitle'
-                        placeholder='Issue title'
-                        value={titleLive}
-                        onChange={(e)=>{if (e.target.value.length < 51) setTitleLive(e.target.value)}}
-                        onFocus={handleFocus}
-                        onBlur={handleBlur}  ></input>
+                            placeholder='Issue title'
+                            value={titleLive}
+                            onChange={(e) => { if (e.target.value.length < 51) setTitleLive(e.target.value) }}
+                            onFocus={handleFocus}
+                            onBlur={handleBlur}  ></input>
                         <p id={'issDesc'} className={'' + (issue?.description ? '' : 'empty')}>{issue?.description ? issue.description : "Add a description with the 'Edit Issue' button to the right"}</p>
                         <p>Comments</p>
                         {issue?.Comments && Object.values(issue.Comments).map(comment => {
@@ -149,49 +149,13 @@ function IssueDetails() {
                                 onChange={(e) => setComment(e.target.value)} />
                             <div id='commAct'>
                                 {hasSubmitted && <p className='error'>{errors.comment}</p>}
-                                <button type='submit'>Submit</button>
+                                <button id='commSubmit' type='submit'>Submit</button>
                             </div>
                         </form>
                     </div>
                 </div>
             </div>
             <div id='issSts'>
-                {/* <p id='Status'>Status </p>
-                    <select  id='issStatus' value={status}
-                    onChange={(e) => setStatus(e.target.value)}>
-                        {issueStatus.map(stat => (
-                            <option value={stat}>{stat}</option>
-                        ))}
-                    </select>
-                <p id='Priority'>Priority </p>
-                    <select id='issPriority' className={'' + (issue?.priority ? '' : 'empty')} value={priority}
-                    onChange={(e) => setPriority(e.target.value === 'Priority' ? null : e.target.value)}>
-                        <option value={null}>No priority</option>
-                        {issuePriority.map(prior => (
-                            <option value={prior}>{prior}</option>
-                        ))}
-                    </select>
-                <p id='Label'>Label </p>
-                    <select id='issLabel' className={'' + (label ? '' : 'empty')} value={label}
-                    onChange={(e) => setLabel(e.target.value === 'Label' ? null : e.target.value)}>
-                        <option value={null}>Add label</option>
-                        {issueLabel.map(label => (
-                            <option value={label}>{label}</option>
-                        ))}
-                    </select>
-                <p id='projNameLbl'>Project </p>
-                    <select id='projName' className={'' + (project?.name !== 'Global' ? '' : 'empty')} value={projectId}
-                    onChange={(e) => setProjectId(e.target.value)}>
-                        {team && Object.values(team.Projects).map(proj => {
-                            if (proj.name !== 'Global') return (
-                                <option value={proj.id}>{proj.name}</option>
-                            )
-                            return (
-                                <option value={proj.id}>Add to a project</option>
-                            )
-                        }
-                        )}
-                    </select> */}
                 <p id='Status'>Status </p> <p id='issStatus'> {issue?.status}</p>
                 <p id='Priority'>Priority </p> <p id='issPriority' className={'' + (issue?.priority ? '' : 'empty')}> {issue?.priority ? issue.priority : 'No priority'}</p>
                 <p id='Label'>Label </p> <p id='issLabel' className={'' + (issue?.label ? '' : 'empty')}> {issue?.label ? issue.label : 'Add label'}</p>
@@ -202,6 +166,42 @@ function IssueDetails() {
                     modalComponent={<IssueModal currTeam={team} edit={issue} />}
                 />
                 <button onClick={() => delIssue(issue, team.id)}>Remove Issue</button>
+                {/* <p id='Status'>Status </p>
+                <select  id='issStatus' value={status}
+                onChange={(e) => setStatus(e.target.value)}>
+                    {issueStatus.map(stat => (
+                        <option value={stat}>{stat}</option>
+                    ))}
+                </select>
+            <p id='Priority'>Priority </p>
+                <select id='issPriority' className={'' + (issue?.priority ? '' : 'empty')} value={priority}
+                onChange={(e) => setPriority(e.target.value === 'Priority' ? null : e.target.value)}>
+                    <option value={null}>No priority</option>
+                    {issuePriority.map(prior => (
+                        <option value={prior}>{prior}</option>
+                    ))}
+                </select>
+            <p id='Label'>Label </p>
+                <select id='issLabel' className={'' + (label ? '' : 'empty')} value={label}
+                onChange={(e) => setLabel(e.target.value === 'Label' ? null : e.target.value)}>
+                    <option value={null}>Add label</option>
+                    {issueLabel.map(label => (
+                        <option value={label}>{label}</option>
+                    ))}
+                </select>
+            <p id='projNameLbl'>Project </p>
+                <select id='projName' className={'' + (project?.name !== 'Global' ? '' : 'empty')} value={projectId}
+                onChange={(e) => setProjectId(e.target.value)}>
+                    {team && Object.values(team.Projects).map(proj => {
+                        if (proj.name !== 'Global') return (
+                            <option value={proj.id}>{proj.name}</option>
+                        )
+                        return (
+                            <option value={proj.id}>Add to a project</option>
+                        )
+                    }
+                    )}
+                </select> */}
             </div>
         </div>
     )

@@ -88,12 +88,12 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
                 <div className='commHead'>
                     <p>{team.Members[comment.posterId].username}</p>
                     <div>
-                        <button
+                        <button className='commCardButton'
                             onClick={() => {
                                 setFocused(true);
                                 setTimeout(() => document.getElementById(`repIn${comment.id}`).focus(), 100)
                             }}>Reply</button>
-                        <button onClick={() => handleDelete(comment)}>Delete</button>
+                        <button className='commCardButton' onClick={() => handleDelete(comment)}>Delete</button>
                     </div>
                 </div>
                 <p>{comment.comment}</p>
@@ -105,12 +105,12 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
                         <div className='commHead'>
                             <p>{team.Members[reply.posterId].username}</p>
                             {editting != reply.id && <div>
-                                <button onClick={() => {
+                                <button className='commCardButton' onClick={() => {
                                     setEditting(reply.id);
                                     setCommEdit(reply.comment);
                                 }}
                                 >Edit</button>
-                                <button onClick={() => handleDelete(reply)}>Delete</button>
+                                <button className='commCardButton' onClick={() => handleDelete(reply)}>Delete</button>
                             </div>}
                         </div>
                         {editting == reply.id ?
@@ -126,11 +126,11 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
                                     onChange={(e) => setCommEdit(e.target.value)} />
                                 <div className={'replyAct show'}>
                                     {hasSubmittedEdit && <p className='error'>{errors.replyEdit}</p>}
-                                    <button type='reset' onClick={(e) => {
+                                    <button className='commCardButton' type='reset' onClick={(e) => {
                                         e.preventDefault();
                                         setEditting(false);
                                     }}>Cancel</button>
-                                    <button type='submit'>Submit</button>
+                                    <button className='commCardButton' type='submit'>Submit</button>
                                 </div>
                             </form>
                             : <p>{reply.comment}</p>}
@@ -152,7 +152,7 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
                         onChange={(e) => setReply(e.target.value)} />
                     <div className={'replyAct' + (focused ? ' show' : ' hide')}>
                         {hasSubmitted && <p className='error'>{errors.replyNew}</p>}
-                        <button type='submit'>Submit</button>
+                        <button className='commCardButton' type='submit'>Submit</button>
                     </div>
                 </form>
             }

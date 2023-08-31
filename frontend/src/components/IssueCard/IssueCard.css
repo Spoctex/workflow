@@ -1,13 +1,15 @@
 .IssueCard{
-    border: 1px solid white;
+    border: solid rgb(44, 46, 60) 1px;
+    box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px;
+    background-color: #20212E;
     border-radius: 10px;
-    background-color: rgba(255,255,255,0.1);
     padding: 7px;
     margin-bottom: 10px;
 }
 
 .IssueCard:hover{
     cursor: pointer;
+    background-color: #262838;
 }
 
 .issCardPs{
@@ -21,9 +23,9 @@
 }
 
 .issCardPs>p{
-    background-color: rgba(0,0,0,0.3);
+    background-color: inherit;
     padding: 5px;
-    border: 1px grey solid;
+    border: solid rgb(95, 98, 129) 1px;
     border-radius: 7px;
     font-size: small;
 }

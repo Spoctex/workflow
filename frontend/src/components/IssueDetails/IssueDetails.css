@@ -1,4 +1,4 @@
-#issDets{
+#issDets {
     width: 100%;
     height: 100%;
     display: grid;
@@ -7,26 +7,26 @@
     /* gap: 10px; */
 }
 
-#lnks{
+#lnks {
     border-left: 1px solid lightgrey;
     border-bottom: 1px solid lightgrey;
 }
 
-#issId{
+#issId {
     border-bottom: 1px solid lightgrey;
 }
 
-#issDesc1{
+#issDesc1 {
     display: flex;
     justify-content: center;
 }
 
-#issDesc2{
+#issDesc2 {
     width: 90%;
     max-width: 892px;
 }
 
-#issTitle{
+#issTitle {
     border: none;
     border-radius: 5px;
     /* outline-color: lightgray; */
@@ -35,11 +35,11 @@
     padding: 10px;
     background-color: inherit;
     font-size: x-large;
-    overflow-wrap: break-word;
     color: lightgrey;
+    overflow-wrap: break-word;
 }
 
-#issDesc{
+#issDesc {
     border: solid 1px lightgrey;
     border-radius: 5px;
     width: 100%;
@@ -48,20 +48,20 @@
     overflow-wrap: break-word;
 }
 
-.empty{
+.empty {
     color: darkgrey;
 }
 
-#lnks{
+#lnks {
     padding-left: 10px;
 }
 
-#issSts{
+#issSts {
     border-left: 1px solid lightgrey;
     padding-left: 10px;
     display: grid;
     grid-template-columns: 95px 1fr;
-    grid-template-rows: 50px 50px 50px 50px 50px ;
+    grid-template-rows: 50px 50px 50px 50px 50px;
     align-items: center;
 }
 
@@ -69,7 +69,8 @@
     background-color: rgba(0,0,0,0);
 } */
 
-#issSts>button{
+#commSubmit,
+#issSts>button {
     width: fit-content;
     height: fit-content;
     background-image: linear-gradient(92.88deg, rgb(55, 75, 145) 9.16%, rgb(57, 41, 153) 43.89%, rgb(66, 33, 157) 64.72%);
@@ -79,22 +80,27 @@
     border-radius: 20px;
 }
 
-#commentIn1{
-    border: solid 1px lightgrey;
+#commentIn1 {
+    border: solid rgb(44, 46, 60) 1px;
+    box-shadow: rgba(0, 0, 0, 0.098) 0px 2px 4px;
+    background-color: #20212E;
     padding: 10px;
     border-radius: 10px;
 }
 
-#commentIn{
+#commentIn {
+    font-family: "Gordita", Helvetica, Arial, Verdana, sans-serif;
+    font-size: 16px;
+    color: white;
     background-color: inherit;
     border: none;
     outline: none;
-    color: lightgrey;
     resize: none;
     width: 100%;
     min-height: 75px;
 }
-#commAct{
+
+#commAct {
     display: flex;
     justify-content: end;
 }
