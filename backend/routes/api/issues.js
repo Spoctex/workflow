@@ -59,6 +59,7 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req,res,next) =>{
     let iss = await Issue.findByPk(req.params.id);
+    console.log(req.body)
     const { projectId, title, description, priority, label, assignedId, status } = req.body;
     iss.title = title;
     iss.projectId = projectId;

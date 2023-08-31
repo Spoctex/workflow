@@ -189,6 +189,7 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
         body: JSON.stringify(edit)
     });
     newIss = await newIss.json();
+    console.log('editIssue', newIss)
     dispatch(putIssue(newIss, edit.currTeam, edit.oldProj))
 }
 
@@ -305,6 +306,7 @@ const teamReducer = (state = initialState, action) => {
             return newState;
         case EDIT_ISSUE:
             newState = Object.assign({}, state);
+            action.issue.Comments = newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id].Comments
             if (action.issue.projectId !== action.oldProjId) delete newState[action.teamId].Projects[action.oldProjId].Issues[action.issue.id]
             newState[action.teamId].Projects[action.issue.projectId].Issues[action.issue.id] = action.issue;
             return newState;

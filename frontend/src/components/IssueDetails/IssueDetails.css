@@ -27,12 +27,16 @@
 }
 
 #issTitle{
-    border: solid 1px lightgrey;
+    border: none;
     border-radius: 5px;
+    /* outline-color: lightgray; */
     width: 95%;
+    margin-top: 10px;
     padding: 10px;
+    background-color: inherit;
     font-size: x-large;
     overflow-wrap: break-word;
+    color: lightgrey;
 }
 
 #issDesc{
@@ -61,9 +65,8 @@
     align-items: center;
 }
 
-/* #Status,#Label,#Priority,#projNameLbl,#issStatus,#issPriority,#issLabel,#projName{
-    display: flex;
-    align-items: center;
+/* #issSts>select,#issSts>select>option{
+    background-color: rgba(0,0,0,0);
 } */
 
 #issSts>button{

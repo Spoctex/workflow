@@ -3,7 +3,8 @@ import './IssueDetails.css'
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
-import { addComment, removeIssue, userInfo } from '../../store/teams';
+import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
+import { addComment, editIssue, removeIssue, userInfo } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
@@ -22,13 +23,58 @@ function IssueDetails() {
     const team = teams[teamId];
     const project = team?.Projects[projId];
     const issue = teams[teamId]?.Projects[projId].Issues[issueId];
+    const [title, setTitle] = useState();
+    const [titleLive, setTitleLive] = useState('');
+    const [description, setDescription] = useState();
+    const [status, setStatus] = useState();
+    const [label, setLabel] = useState();
+    const [priority, setPriority] = useState();
+    const [projectId, setProjectId] = useState();
     const [comment, setComment] = useState('');
     const [errors, setErrors] = useState({});
     const [hasSubmitted, setHasSubmitted] = useState(false);
+    const focusTimeoutRef = useRef(null);
+
+    const handleFocus = () => {
+        clearTimeout(focusTimeoutRef.current);
+    };
+
+    const handleBlur = () => {
+        focusTimeoutRef.current = setTimeout(async () => {
+            if (titleLive.length < 4) {
+                setTitleLive(title)
+            } else {
+                await liveEdit()
+            }
+        }, 100); // Adjust the delay (in milliseconds) according to your needs
+    };
+
+    async function liveEdit() {
+        const iss = {
+            title: titleLive,
+            description,
+            status,
+            label,
+            priority,
+            projectId,
+            currTeam: team.id,
+            id: issue.id,
+            oldProj: issue.projectId
+        };
+        dispatch(editIssue(iss))
+            .then(() => history.push(`/teams/${team.id}/projects/${iss.projectId}/issues/${issue.id}`))
+    }
 
     useEffect(() => {
         if (currTeam != teamId) setCurrTeam(teamId);
-    }, [teamId])
+        setTitle(issue?.title)
+        setTitleLive(issue?.title)
+        setDescription(issue?.description)
+        setProjectId(issue?.projectId)
+        setStatus(issue?.status)
+        setLabel(issue?.label)
+        setPriority(issue?.priority)
+    }, [teamId,issue?.id])
 
     async function delIssue(issue, teamId) {
         dispatch(removeIssue(issue, teamId))
@@ -78,7 +124,12 @@ function IssueDetails() {
             <div id='issDesc1'>
                 <div id='issDesc2'>
                     <div id='issDesc3'>
-                        <p id='issTitle'>{issue?.title}</p>
+                        <input type='string' id='issTitle'
+                        placeholder='Issue title'
+                        value={titleLive}
+                        onChange={(e)=>{if (e.target.value.length < 51) setTitleLive(e.target.value)}}
+                        onFocus={handleFocus}
+                        onBlur={handleBlur}  ></input>
                         <p id={'issDesc'} className={'' + (issue?.description ? '' : 'empty')}>{issue?.description ? issue.description : "Add a description with the 'Edit Issue' button to the right"}</p>
                         <p>Comments</p>
                         {issue?.Comments && Object.values(issue.Comments).map(comment => {
@@ -105,6 +156,42 @@ function IssueDetails() {
                 </div>
             </div>
             <div id='issSts'>
+                {/* <p id='Status'>Status </p>
+                    <select  id='issStatus' value={status}
+                    onChange={(e) => setStatus(e.target.value)}>
+                        {issueStatus.map(stat => (
+                            <option value={stat}>{stat}</option>
+                        ))}
+                    </select>
+                <p id='Priority'>Priority </p>
+                    <select id='issPriority' className={'' + (issue?.priority ? '' : 'empty')} value={priority}
+                    onChange={(e) => setPriority(e.target.value === 'Priority' ? null : e.target.value)}>
+                        <option value={null}>No priority</option>
+                        {issuePriority.map(prior => (
+                            <option value={prior}>{prior}</option>
+                        ))}
+                    </select>
+                <p id='Label'>Label </p>
+                    <select id='issLabel' className={'' + (label ? '' : 'empty')} value={label}
+                    onChange={(e) => setLabel(e.target.value === 'Label' ? null : e.target.value)}>
+                        <option value={null}>Add label</option>
+                        {issueLabel.map(label => (
+                            <option value={label}>{label}</option>
+                        ))}
+                    </select>
+                <p id='projNameLbl'>Project </p>
+                    <select id='projName' className={'' + (project?.name !== 'Global' ? '' : 'empty')} value={projectId}
+                    onChange={(e) => setProjectId(e.target.value)}>
+                        {team && Object.values(team.Projects).map(proj => {
+                            if (proj.name !== 'Global') return (
+                                <option value={proj.id}>{proj.name}</option>
+                            )
+                            return (
+                                <option value={proj.id}>Add to a project</option>
+                            )
+                        }
+                        )}
+                    </select> */}
                 <p id='Status'>Status </p> <p id='issStatus'> {issue?.status}</p>
                 <p id='Priority'>Priority </p> <p id='issPriority' className={'' + (issue?.priority ? '' : 'empty')}> {issue?.priority ? issue.priority : 'No priority'}</p>
                 <p id='Label'>Label </p> <p id='issLabel' className={'' + (issue?.label ? '' : 'empty')}> {issue?.label ? issue.label : 'Add label'}</p>
