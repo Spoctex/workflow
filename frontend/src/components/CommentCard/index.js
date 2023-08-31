@@ -80,6 +80,7 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
             teamId: team.id
         }));
     }
+    //re-align git branches
 
     return (
         <div className='commentCard'>
