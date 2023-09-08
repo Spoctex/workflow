@@ -1,7 +1,7 @@
 const express = require('express');
 const {welcomeIssues} = require('./welcomeData')
 
-const { User, Issue, Team, Project, Member } = require('../../db/models');
+const { User, Issue, Team, Project, Member, Comment } = require('../../db/models');
 
 const router = express.Router();
 
@@ -26,7 +26,10 @@ router.post('/', async (req, res, next) => {
     let teamFormd = await Team.findByPk(newTeam.id, {
         include: {
             model: Project,
-            include: Issue
+            include: {
+                model: Issue,
+                include: Comment
+            }
         }
     });
     teamFormd = await teamFormd.toJSON();
