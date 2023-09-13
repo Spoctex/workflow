@@ -74,7 +74,7 @@ function IssueDetails() {
         setStatus(issue?.status)
         setLabel(issue?.label)
         setPriority(issue?.priority)
-    }, [teamId, issue?.id])
+    }, [teamId, issue?.id, issue?.title])
 
     async function delIssue(issue, teamId) {
         dispatch(removeIssue(issue, teamId))

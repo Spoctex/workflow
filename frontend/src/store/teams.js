@@ -189,7 +189,6 @@ export const editIssue = (edit/*{ title, description, status, label, priority, p
         body: JSON.stringify(edit)
     });
     newIss = await newIss.json();
-    console.log('editIssue', newIss)
     dispatch(putIssue(newIss, edit.currTeam, edit.oldProj))
 }
 

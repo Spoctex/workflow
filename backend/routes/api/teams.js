@@ -7,7 +7,6 @@ const router = express.Router();
 
 
 router.post('/', async (req, res, next) => {
-    console.log(req.body)
     let newTeam = await Team.create({
         name: req.body.name,
         ownerId: req.user.id
@@ -39,7 +38,6 @@ router.post('/', async (req, res, next) => {
         lastName: req.user.lastName,
         username: req.user.username
     }];
-    console.log(teamFormd)
     return res.json(teamFormd);
 })
 

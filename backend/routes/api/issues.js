@@ -12,7 +12,6 @@ router.get(
     '/:id',
     async (req, res, next) => {
         let iss = await Issue.findByPk(req.params.id);
-        // console.log(iss)
         if (!iss) {
             let err = new Error('Issue could not be found');
             err.status = 404;
@@ -36,7 +35,6 @@ router.post('/',
     validateNewIssue,
     async (req, res, next) => {
         const { projectId, title, description, priority, label, assignedId, status } = req.body;
-        // console.log(projectId, title, description)
         let iss = await Issue.create({
             creatorId: req.user.id,
             projectId,
@@ -59,7 +57,6 @@ router.delete('/:id', async (req, res, next) => {
 
 router.put('/:id', async (req,res,next) =>{
     let iss = await Issue.findByPk(req.params.id);
-    console.log(req.body)
     const { projectId, title, description, priority, label, assignedId, status } = req.body;
     iss.title = title;
     iss.projectId = projectId;
