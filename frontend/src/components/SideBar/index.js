@@ -35,59 +35,81 @@ function SideBar({ isLoaded }) {
 
 
   return (
-    <div className={"sideBarMain" + showBar} id="sideBarMain">
-      <ProfileButton user={user} />
-      {currTeam && <OpenModalButton
-        buttonText="+ New Issue"
-        id='newIss'
-        modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
-      />}
-      <button onClick={() => history.push('/myIssues')}>My Issues</button>
-      <p id="yTems">Your Teams</p>
-      {Object.values(teams).map(team => {
-        return (
-          <>
-            <button className="teamButt" onClick={() => {
-              setCurrTeam(team.id);
-              history.push(`/teams/${team.id}/issues`);
-            }}>
-              <p>
-              {team.name}
-              </p>
-              {team.id == currTeam ?
-              <span class="material-symbols-outlined">
-                expand_less
-              </span> :
-              <span class="material-symbols-outlined">
-                expand_more
-              </span>}</button>
-            <ul className={currTeam == team.id ? '' : 'hidden'}>
-              <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
-                Issues
-                {/* <ul>
+    <div id="sideCont" className={showBar}>
+      <div className={"sideBarMain" + showBar} id="sideBarMain">
+        <ProfileButton user={user} />
+        {currTeam && <OpenModalButton
+          buttonText="+ New Issue"
+          id='newIss'
+          modalComponent={<IssueModal currTeam={teams[currTeam]} edit={false} />}
+        />}
+        <button onClick={() => history.push('/myIssues')}>My Issues</button>
+        <p id="yTems">Your Teams</p>
+        {Object.values(teams).map(team => {
+          return (
+            <>
+              <button className="teamButt" onClick={() => {
+                setCurrTeam(team.id);
+                history.push(`/teams/${team.id}/issues`);
+              }}>
+                <p>
+                  {team.name}
+                </p>
+                {team.id == currTeam ?
+                  <span class="material-symbols-outlined">
+                    expand_less
+                  </span> :
+                  <span class="material-symbols-outlined">
+                    expand_more
+                  </span>}</button>
+              <ul className={currTeam == team.id ? '' : 'hidden'}>
+                <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
+                  Issues
+                  {/* <ul>
                   <li>Active</li>
                   <li>Backlog</li>
                 </ul> */}
-              </li>
-              <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
-              <li>
-                <OpenModalButton
-                  buttonText="Edit Team"
-                  modalComponent={<TeamModal edit={team} />}
-                />
-              </li>
-              <li>
-                <button onClick={() => dispatch(deleteTeam(team)).then(() => history.push('/myIssues'))}>Delete Team</button>
-              </li>
-            </ul>
-          </>
-        )
-      })}
-      <OpenModalButton
-        buttonText="+ New Team"
-        id='newTeam'
-        modalComponent={<TeamModal edit={false} />}
-      />
+                </li>
+                <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
+                <li>
+                  <OpenModalButton
+                    buttonText="Edit Team"
+                    modalComponent={<TeamModal edit={team} />}
+                  />
+                </li>
+                <li>
+                  <button onClick={() => dispatch(deleteTeam(team)).then(() => history.push('/myIssues'))}>Delete Team</button>
+                </li>
+              </ul>
+            </>
+          )
+        })}
+        <OpenModalButton
+          buttonText="+ New Team"
+          id='newTeam'
+          modalComponent={<TeamModal edit={false} />}
+        />
+      </div>
+      <div id="linkContSide">
+        <a
+          className="connLinksSide"
+          href="https://github.com/Spoctex"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <span>GitHub   </span>
+          <i class="fab fa-github"></i>
+        </a>
+        <a
+          className="connLinksSide"
+          href="https://www.linkedin.com/in/casey-o-neil-993b7228a/"
+          target="_blank"
+          rel="noopener noreferer"
+        >
+          <span>LinkedIn   </span>
+          <i class="fab fa-linkedin"></i>
+        </a>
+      </div>
     </div>
   );
 }

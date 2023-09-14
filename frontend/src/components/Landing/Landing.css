@@ -1,7 +1,7 @@
-#landBody{
+#landBody {
     width: 60%;
-    /* border: solid red 1px; */
     margin: auto;
+    /* border: solid red 1px; */
     /* margin-left: 20%; */
     display: flex;
     flex-direction: column;
@@ -9,24 +9,24 @@
     /* align-items: center; */
 }
 
-#logo{
-   margin: 0;
+#logo {
+    margin: 0;
 }
 
-#header{
+#header {
     display: flex;
     justify-content: space-between;
     padding: 10px;
 }
 
-.userButtons{
+.userButtons {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
 #startButton>button,
-.userButtons>button{
+.userButtons>button {
     margin-left: 10px;
     font-size: medium;
     padding: 10px 20px;
@@ -38,21 +38,22 @@
 }
 
 .userButtons>button:hover,
-#startButton>button:hover{
+#startButton>button:hover {
     cursor: pointer;
 }
 
-#startButton>button{
+#startButton>button {
     padding: 10px 25px;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
     margin-top: 50px;
 }
 
-#exmplKan{
+#exmplKan {
     width: 100%;
+    margin-bottom: 20px;
 }
 
-#landMain{
+#landMain {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -60,12 +61,32 @@
     margin-top: 80px;
 }
 
-.welcDesc{
+.welcDesc {
     margin: 5px;
     font-weight: normal;
 }
-.welc{
+
+.welc {
     font-size: 70px;
     font-weight: normal;
     margin: 0;
+}
+
+#linkContLand{
+    position: sticky;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    background-color: #14141d;
+    width: 100%;
+}
+
+.connLinksLand{
+    margin: 10px;
+    font-size: large;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 50px;
+    color: lightgrey;
+    background-image: linear-gradient(92.88deg, rgb(55, 75, 145) 9.16%, rgb(57, 41, 153) 43.89%, rgb(66, 33, 157) 64.72%);
 }
