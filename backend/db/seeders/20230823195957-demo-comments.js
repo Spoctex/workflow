@@ -1,5 +1,7 @@
 'use strict';
 
+const { generateComments } = require('../seeds/commentSeeds');
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,24 +11,9 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Comments';
-    return queryInterface.bulkInsert(options, [
-      {
-        issueId:1,
-        posterId:12,
-        comment:'Test comment with reply'
-      },
-      {
-        issueId:1,
-        posterId:12,
-        replyOf:1,
-        comment:'Test reply'
-      },
-      {
-        issueId:1,
-        posterId:12,
-        comment:'Test comment without reply'
-      },
-    ], {});
+    let comms = generateComments();
+    // console.log(comms)
+    return queryInterface.bulkInsert(options, comms, {});
   },
 
   async down(queryInterface, Sequelize) {

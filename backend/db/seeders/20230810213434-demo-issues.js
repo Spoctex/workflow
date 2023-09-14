@@ -1,5 +1,7 @@
 'use strict';
 
+const { issues } = require('../seeds/issueSeeds');
+
 let options = {};
 if (process.env.NODE_ENV === 'production') {
   options.schema = process.env.SCHEMA;  // define your schema in options object
@@ -9,78 +11,7 @@ if (process.env.NODE_ENV === 'production') {
 module.exports = {
   async up(queryInterface, Sequelize) {
     options.tableName = 'Issues';
-    return queryInterface.bulkInsert(options, [
-      {
-        projectId:1,
-        creatorId:12,
-        title:"Demo Global",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:2,
-        creatorId:12,
-        title:"Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:2,
-        creatorId:1,
-        title:"Not Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:3,
-        creatorId:1,
-        title:"Not Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:3,
-        creatorId:12,
-        title:"Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:4,
-        creatorId:1,
-        title:"Not Demo Global",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:5,
-        creatorId:1,
-        title:"Not Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:5,
-        creatorId:12,
-        title:"Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:6,
-        creatorId:12,
-        title:"Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-      {
-        projectId:6,
-        creatorId:1,
-        title:"Not Demo's Issue",
-        description:'description',
-        status:'Backlog'
-      },
-    ], {});
+    return queryInterface.bulkInsert(options, issues, {});
   },
 
   async down(queryInterface, Sequelize) {
