@@ -1,4 +1,4 @@
-import 'ProjectIssues.css';
+import './ProjectIssues.css';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useContext } from 'react';
@@ -9,21 +9,21 @@ import IssueBoard from '../IssueBoard';
 function ProjectIssues() {
     const teams = useSelector(state => state.teams);
     const { currTeam, setCurrTeam } = useContext(CurrTeamContext);
-    const [teamIssues, setTeamIssues] = useState([]);
-    const { teamId, projId } = useParams();
+    const [projIssues, setProjIssues] = useState([]);
+    const { teamId, projectId } = useParams();
 
     useEffect(() => {
         if (currTeam != teamId) setCurrTeam(teamId);
     }, [teamId])
 
     useEffect(() => {
-        if (teams[currTeam].Projects[projId]) {
-            setTeamIssues(Object.values(teams[currTeam].Projects[projId].Issues));
+        let currProj = teams[currTeam]?.Projects[projectId];
+        if (currProj) {
+            setProjIssues(Object.values(currProj.Issues).map(iss=>[iss,currProj,teams[currTeam]]));
         }
-    }, [currTeam, teams, ])
-
+    }, [currTeam, teams, projectId])
     return (
-        <IssueBoard issArr={teamIssues}/>
+        <IssueBoard issArr={projIssues}/>
     )
 }
 

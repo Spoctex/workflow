@@ -8,6 +8,7 @@ import MyIssues from "./components/MyIssues";
 import IssueDetails from "./components/IssueDetails";
 import TeamIssues from "./components/TeamIssues";
 import TeamProjects from "./components/TeamProjects";
+import ProjectIssues from "./components/ProjectIssues";
 
 function App() {
   const dispatch = useDispatch();
@@ -37,6 +38,9 @@ function App() {
             </Route>
             <Route exact path='/teams/:teamId/projects'>
               <TeamProjects />
+            </Route>
+            <Route exact path='/teams/:teamId/projects/:projectId'>
+              <ProjectIssues/>
             </Route>
             <Route exact path='/teams/:teamId/projects/:projId/issues/:issueId'>
               <IssueDetails />
