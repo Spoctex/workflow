@@ -1,5 +1,12 @@
+/* #issBoard{
+    height: 100%;
+    width: calc(100vw - 260px);
+    overflow: auto;
+} */
+
 #colCont{
     display: grid;
     grid-template-columns: repeat(6, 356px);
     gap: 10px;
+    overflow: hidden;
 }
