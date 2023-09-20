@@ -150,3 +150,6 @@
     background-image: linear-gradient(92.88deg, rgb(55, 75, 145) 9.16%, rgb(57, 41, 153) 43.89%, rgb(66, 33, 157) 64.72%);
 }
 
+.teamLinks:hover{
+    cursor: pointer;
+}

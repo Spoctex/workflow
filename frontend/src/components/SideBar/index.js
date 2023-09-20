@@ -63,14 +63,14 @@ function SideBar({ isLoaded }) {
                     expand_more
                   </span>}</button>
               <ul className={currTeam == team.id ? '' : 'hidden'}>
-                <li onClick={() => history.push(`/teams/${team.id}/issues`)}>
+                <li className="teamLinks" onClick={() => history.push(`/teams/${team.id}/issues`)}>
                   Issues
                   {/* <ul>
                   <li>Active</li>
                   <li>Backlog</li>
                 </ul> */}
                 </li>
-                <li onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
+                <li className="teamLinks" onClick={() => history.push(`/teams/${team.id}/projects`)}>Projects</li>
                 <li>
                   <OpenModalButton
                     buttonText="Edit Team"

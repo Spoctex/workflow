@@ -8,6 +8,12 @@
     overflow-wrap: break-word;
 }
 
+#newProj:hover,
+.projCard>button:hover,
+.projCard:hover{
+    cursor: pointer;
+}
+
 #newProj,
 .projCard>button{
     margin: 5px;
