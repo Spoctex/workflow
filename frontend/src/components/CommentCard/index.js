@@ -87,16 +87,40 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
             <div className='commMain'>
                 <div className='commHead'>
                     <p>{team.Members[comment.posterId].username}</p>
-                    <div>
+                    {editting != comment.id && <div>
                         <button className='commCardButton'
                             onClick={() => {
                                 setFocused(true);
                                 setTimeout(() => document.getElementById(`repIn${comment.id}`).focus(), 100)
                             }}>Reply</button>
+                            <button className='commCardButton' onClick={() => {
+                                    setEditting(comment.id);
+                                    setCommEdit(comment.comment);
+                                }}>Edit</button>
                         <button className='commCardButton' onClick={() => handleDelete(comment)}>Delete</button>
-                    </div>
+                    </div>}
                 </div>
-                <p>{comment.comment}</p>
+                        {editting == comment.id ?
+                            <form id='repEdit' className='repliesIn1' onSubmit={onSubmitEdit}>
+                                <textarea className='repliesIn'
+                                    type='string'
+                                    placeholder='Leave a reply...'
+                                    onInput={(e) => {
+                                        e.target.style.height = 0;
+                                        e.target.style.height = e.target.scrollHeight + 'px';
+                                    }}
+                                    value={commEdit}
+                                    onChange={(e) => setCommEdit(e.target.value)} />
+                                <div className={'replyAct show'}>
+                                    {hasSubmittedEdit && <p className='error'>{errors.replyEdit}</p>}
+                                    <button className='commCardButton' type='reset' onClick={(e) => {
+                                        e.preventDefault();
+                                        setEditting(false);
+                                    }}>Cancel</button>
+                                    <button className='commCardButton' type='submit'>Submit</button>
+                                </div>
+                            </form>
+                            : <p>{comment.comment}</p>}
             </div>
             {comment.Replies.map(rep => {
                 const reply = Comments[rep];
