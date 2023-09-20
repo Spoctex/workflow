@@ -104,3 +104,8 @@
     display: flex;
     justify-content: end;
 }
+
+#commSubmit:hover,
+#issSts>button:hover{
+    cursor: pointer;
+}

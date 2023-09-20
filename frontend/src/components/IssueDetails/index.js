@@ -3,8 +3,8 @@ import './IssueDetails.css'
 import { useParams } from 'react-router-dom';
 import OpenModalButton from '../OpenModalButton';
 import IssueModal from '../IssueModal';
-import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
-import { addComment, editIssue, removeIssue, userInfo } from '../../store/teams';
+// import { issueLabel, issuePriority, issueStatus } from '../enumGlobal';
+import { addComment, editIssue, removeIssue } from '../../store/teams';
 import { useHistory } from 'react-router-dom';
 import { useContext, useEffect, useRef } from 'react';
 import { CurrTeamContext } from '../../context/currTeam';
