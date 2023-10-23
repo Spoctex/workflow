@@ -36,7 +36,7 @@ function Landing({ isLoaded }) {
                         </>}
                 </div>
                 <div id="landMain">
-                    <h1 className="welc">Linear is a better way</h1>
+                    <h1 className="welc">Workflow is a better way</h1>
                     <h1 className="welc">to build products</h1>
                     <h3 className="welcDesc">Meet the new standard for modern software development.</h3>
                     <h3 className="welcDesc">Streamline issues, sprints, and product roadmaps.</h3>
