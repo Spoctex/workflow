@@ -47,7 +47,7 @@ function Landing({ isLoaded }) {
                         />
                     </div>
                 </div>
-                <img id="exmplKan" src="https://linear.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Fhero%404x.15e3a396.jpg&w=3840&q=75" />
+                <img id="exmplKan" src="https://i.imgur.com/C25iLQl.png" />
             </div>
             <div id="linkContLand">
                 <a
