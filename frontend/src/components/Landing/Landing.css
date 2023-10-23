@@ -51,6 +51,8 @@
 #exmplKan {
     width: 100%;
     margin-bottom: 20px;
+    outline: 1px whitesmoke solid;
+    border-radius: 10px;
 }
 
 #landMain {
