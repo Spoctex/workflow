@@ -95,11 +95,11 @@
     display: block;
 }
 
-.reply:hover>div {
+.reply:hover>.userReply {
     padding: 10px 10px;
 }
 
-.commMain:hover>div {
+.commMain:hover>.notEditing {
     padding: 10px 10px;
 }
 

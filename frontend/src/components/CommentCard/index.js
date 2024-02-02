@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react';
 import './CommentCard.css'
 import { delComment, editComment } from '../../store/teams';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 
 function CommentCard({ comment, team, project, Comments, createReply }) {
@@ -14,6 +14,7 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
     const [focused, setFocused] = useState(false);
     const [editting, setEditting] = useState(false);
     const focusTimeoutRef = useRef(null);
+    const user = useSelector(state => state.session.user)
 
     const handleFocus = () => {
         clearTimeout(focusTimeoutRef.current);
@@ -85,22 +86,22 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
     return (
         <div className='commentCard'>
             <div className='commMain'>
-                <div className='commHead'>
+                <div className={`commHead ${editting === comment.id ? '' : 'notEditing'}`}>
                     <p>{team.Members[comment.posterId].username}</p>
-                    {editting != comment.id && <div>
+                    {editting !== comment.id && <div>
                         <button className='commCardButton'
                             onClick={() => {
                                 setFocused(true);
                                 setTimeout(() => document.getElementById(`repIn${comment.id}`).focus(), 100)
                             }}>Reply</button>
-                            <button className='commCardButton' onClick={() => {
+                        {comment.posterId === user.id && <button className='commCardButton' onClick={() => {
                                     setEditting(comment.id);
                                     setCommEdit(comment.comment);
-                                }}>Edit</button>
-                        <button className='commCardButton' onClick={() => handleDelete(comment)}>Delete</button>
+                                }}>Edit</button>}
+                        {comment.posterId === user.id && <button className='commCardButton' onClick={() => handleDelete(comment)}>Delete</button>}
                     </div>}
                 </div>
-                        {editting == comment.id ?
+                        {editting === comment.id ?
                             <form id='repEdit' className='repliesIn1' onSubmit={onSubmitEdit}>
                                 <textarea className='repliesIn'
                                     type='string'
@@ -126,18 +127,18 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
                 const reply = Comments[rep];
                 return (
                     <div className='reply'>
-                        <div className='commHead'>
+                        <div className={`commHead ${reply.posterId === user.id && editting !== reply.id ? 'userReply' : ''}`}>
                             <p>{team.Members[reply.posterId].username}</p>
-                            {editting != reply.id && <div>
-                                <button className='commCardButton' onClick={() => {
+                            {editting !== reply.id && <div>
+                                {reply.posterId === user.id && <button className='commCardButton' onClick={() => {
                                     setEditting(reply.id);
                                     setCommEdit(reply.comment);
                                 }}
-                                >Edit</button>
-                                <button className='commCardButton' onClick={() => handleDelete(reply)}>Delete</button>
+                                >Edit</button>}
+                                {reply.posterId === user.id && <button className='commCardButton' onClick={() => handleDelete(reply)}>Delete</button>}
                             </div>}
                         </div>
-                        {editting == reply.id ?
+                        {editting === reply.id ?
                             <form id='repEdit' className='repliesIn1' onSubmit={onSubmitEdit}>
                                 <textarea className='repliesIn'
                                     type='string'
