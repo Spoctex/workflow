@@ -21,6 +21,8 @@ function CommentCard({ comment, team, project, Comments, createReply }) {
         setFocused(true);
     };
 
+    //comment
+
     const handleBlur = () => {
         focusTimeoutRef.current = setTimeout(() => {
             if (!reply) {
